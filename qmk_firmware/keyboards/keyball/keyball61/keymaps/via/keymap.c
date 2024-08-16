@@ -71,4 +71,8 @@ void oledkit_render_info_user(void) {
     keyball_oled_render_ballinfo();
     keyball_oled_render_layerinfo();
 }
+
+void oledkit_render_logo_user(void) {
+    oledkit_render_info_user();
+}
 #endif

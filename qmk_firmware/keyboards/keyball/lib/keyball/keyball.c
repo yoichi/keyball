@@ -37,6 +37,8 @@ static const char BL = '\xB0'; // Blank indicator character
 static const char LFSTR_ON[] PROGMEM = "\xB2\xB3";
 static const char LFSTR_OFF[] PROGMEM = "\xB4\xB5";
 
+static uint8_t s_cpi_value = CPI_DEFAULT;
+
 keyball_t keyball = {
     .this_have_ball = false,
     .that_enable    = false,
@@ -111,6 +113,24 @@ static const char *format_4d(int8_t d) {
         d /= 10;
     }
     buf[0] = lead;
+    return buf;
+}
+
+static const char *format_3u(uint8_t u) {
+    static char buf[4] = {0}; // max width (3) + NUL (1)
+    buf[2] = (u % 10) + '0';
+    u /= 10;
+    if (u == 0) {
+        buf[1] = ' ';
+    } else {
+        buf[1] = (u % 10) + '0';
+        u /= 10;
+    }
+    if (u == 0) {
+        buf[0] = ' ';
+    } else {
+        buf[0] = (u % 10) + '0';
+    }
     return buf;
 }
 
@@ -358,8 +378,19 @@ static void rpc_get_motion_invoke(void) {
     return;
 }
 
+//#define RETRY_IF_DIFFER
+
 static void rpc_set_cpi_handler(uint8_t in_buflen, const void *in_data, uint8_t out_buflen, void *out_data) {
+#if 0
     keyball_set_cpi(*(keyball_cpi_t *)in_data);
+#else
+    keyball_cpi_t req = *(keyball_cpi_t *)in_data;
+    s_cpi_value = req;
+    keyball_set_cpi(req);
+#ifdef RETRY_IF_DIFFER
+    *(keyball_cpi_t *)out_data = req;
+#endif
+#endif
 }
 
 static void rpc_set_cpi_invoke(void) {
@@ -367,9 +398,20 @@ static void rpc_set_cpi_invoke(void) {
         return;
     }
     keyball_cpi_t req = keyball.cpi_value;
+#ifdef RETRY_IF_DIFFER
+    keyball_cpi_t resp;
+    if (!transaction_rpc_exec(KEYBALL_SET_CPI, sizeof(req), &req, sizeof(resp), &resp)) {
+        return;
+    }
+    if (resp != req) {
+        return; // retry
+    }
+#else
     if (!transaction_rpc_send(KEYBALL_SET_CPI, sizeof(req), &req)) {
         return;
     }
+#endif
+    s_cpi_value = req;
     keyball.cpi_changed = false;
 }
 
@@ -408,8 +450,16 @@ void keyball_oled_render_ballinfo(void) {
 
     // 2nd line, empty label and CPI
     oled_write_P(PSTR("    \xB1\xBC\xBD"), false);
-    oled_write(format_4d(keyball_get_cpi()) + 1, false);
+    if (keyball.this_have_ball) {
+      oled_write(format_3u(pmw3360_cpi_get()+1), false);
+    } else {
+      oled_write(format_3u(keyball_get_cpi()), false);
+    }
+#if 0
     oled_write_P(PSTR("00 "), false);
+#else
+    oled_write(format_3u(s_cpi_value), false);
+#endif
 
     // indicate scroll snap mode: "VT" (vertical), "HN" (horiozntal), and "SCR" (free)
 #if 1 && KEYBALL_SCROLLSNAP_ENABLE == 2
