@@ -408,7 +408,15 @@ void keyball_oled_render_ballinfo(void) {
 
     // 2nd line, empty label and CPI
     oled_write_P(PSTR("    \xB1\xBC\xBD"), false);
+#ifdef DISPLAY_PMW3360_CPI_VALUE
+    if (!is_keyboard_master() && keyball.this_have_ball) {
+        oled_write(format_4d(pmw3360_cpi_get()+1) + 1, false);
+    } else {
+        oled_write(format_4d(keyball_get_cpi()) + 1, false);
+    }
+#else
     oled_write(format_4d(keyball_get_cpi()) + 1, false);
+#endif
     oled_write_P(PSTR("00 "), false);
 
     // indicate scroll snap mode: "VT" (vertical), "HN" (horiozntal), and "SCR" (free)

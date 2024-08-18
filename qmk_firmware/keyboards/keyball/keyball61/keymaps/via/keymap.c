@@ -71,4 +71,10 @@ void oledkit_render_info_user(void) {
     keyball_oled_render_ballinfo();
     keyball_oled_render_layerinfo();
 }
+
+#ifdef DISPLAY_PMW3360_CPI_VALUE
+void oledkit_render_logo_user(void) {
+    oledkit_render_info_user();
+}
+#endif
 #endif
