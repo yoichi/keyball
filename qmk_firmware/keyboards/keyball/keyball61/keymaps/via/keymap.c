@@ -27,7 +27,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB   , KC_Q     , KC_W     , KC_E     , KC_R     , KC_T     ,                                  KC_Y     , KC_U     , KC_I     , KC_O     , KC_P     , KC_BSLS  ,
 LCTL_T(KC_GRV),KC_A     , KC_S     , KC_D     , KC_F     , KC_G     ,                                  KC_H     , KC_J     , KC_K     , KC_L     , KC_SCLN  , RCTL_T(KC_EQL),
     KC_LSFT  , KC_Z     , KC_X     , KC_C     , KC_V     , KC_B     ,LCTL_T(KC_RBRC),         KC_LBRC, KC_N     , KC_M     , KC_COMM  , KC_DOT   , KC_SLSH  , KC_RSFT,
-LT(1,KC_QUOT), KC_LCTL  , KC_LALT  , KC_LGUI,LT(1,KC_LNG2),LT(2,KC_SPC),LT(3,KC_LNG1),        KC_BSPC,LT(2,KC_ENT), _______, _______  , _______  ,S(KC_CAPS), LT(1,KC_QUOT)
+LT(1,KC_QUOT), KC_LCTL  , KC_LALT  , KC_LGUI,LT(1,KC_LNG2),LT(2,KC_SPC),LT(3,KC_LNG1),        KC_BSPC,LT(2,KC_ENT), _______, _______  , _______  ,RGUI_T(S(KC_CAPS)),LT(1,KC_QUOT)
   ),
 
   [1] = LAYOUT_universal(
@@ -39,19 +39,19 @@ LT(1,KC_QUOT), KC_LCTL  , KC_LALT  , KC_LGUI,LT(1,KC_LNG2),LT(2,KC_SPC),LT(3,KC_
   ),
 
   [2] = LAYOUT_universal(
-    KC_BRMU  , _______  , _______  , _______  , _______  , _______  ,                                  _______  , _______  , _______  , _______  ,KC_KB_MUTE,KC_KB_VOLUME_UP,
-    KC_BRMD  , _______  , KC_7     , KC_8     , KC_9     , _______  ,                                  _______  , KC_LEFT  , KC_UP    , KC_RGHT  , _______  ,KC_KB_VOLUME_DOWN,
+    KC_BRMU  , _______  , _______  , _______  , _______  , _______  ,                                  KC_HOME  , _______  , _______  , _______  ,KC_KB_MUTE,KC_KB_VOLUME_UP,
+    KC_BRMD  , _______  , KC_7     , KC_8     , KC_9     , _______  ,                                  KC_END   , KC_LEFT  , KC_UP    , KC_RGHT  , _______  ,KC_KB_VOLUME_DOWN,
     _______  , _______  , KC_4     , KC_5     , KC_6     ,S(KC_SCLN),                                  KC_PGUP  , KC_BTN1  , KC_DOWN  , KC_BTN2  , KC_BTN3  , _______  ,
-    _______  , _______  , KC_1     , KC_2     , KC_3     ,S(KC_MINS), S(KC_8)  ,            S(KC_9)  , KC_PGDN  , _______  , _______  , _______  , _______  , _______  ,
-    KC_BTN4  , _______  , KC_0     , KC_DOT   , _______  , _______  , _______  ,            _______  , _______  , _______  , _______  , _______  , _______  , KC_BTN5
+    _______  , _______  , KC_1     , KC_2     , KC_3     ,S(KC_MINS), S(KC_8)  ,            KC_BTN4  , KC_PGDN  , _______  , _______  , _______  , _______  , _______  ,
+    _______  , _______  , KC_0     , KC_DOT   , _______  , _______  , _______  ,            _______  , _______  , _______  , _______  , _______  , _______  , KC_BTN5
   ),
 
   [3] = LAYOUT_universal(
-    _______  , AML_TO   , AML_I50  , AML_D50  , _______  , _______  ,                                  _______  , _______  , _______  , _______  , _______  , _______  ,
-    _______  , _______  , _______  , _______  , _______  , _______  ,                                  _______  , _______  , _______  , _______  , _______  , _______  ,
-    _______  , _______  , _______  , _______  , _______  , _______  ,                                  CPI_D1K  , CPI_D100 , CPI_I100 , CPI_I1K  , KBC_SAVE , KBC_RST  ,
-    _______  , _______  , SCRL_DVD , SCRL_DVI , SCRL_MO  , SCRL_TO  , _______  ,            _______  , KC_HOME  , KC_PGDN  , KC_PGUP  , KC_END   , _______  , _______  ,
-    _______  , _______  , _______  , _______  , _______  , _______  , _______  ,            _______  , _______  , _______  , _______  , _______  , _______  , _______
+    _______  , AML_TO   , AML_I50  , AML_D50  , _______  , _______  ,                                  KC_HOME  , _______  , _______  , _______  , _______  , _______  ,
+    _______  , _______  , _______  , _______  , _______  , _______  ,                                  KC_END   , KC_LEFT  , KC_UP    , KC_RGHT  , _______  , _______  ,
+    KBC_RST  , KBC_SAVE , CPI_D1K  , CPI_D100 , CPI_I100 , CPI_I1K  ,                                  KC_PGUP  , KC_BTN1  , KC_DOWN  , KC_BTN2  , KC_BTN3  , _______  ,
+    _______  , _______  , SCRL_DVD , SCRL_DVI , SCRL_MO  , SCRL_TO  , _______  ,            KC_BTN4  , KC_PGDN  , _______  , _______  , _______  , _______  , _______  ,
+    _______  , _______  , _______  , _______  , _______  , _______  , _______  ,            _______  , _______  , _______  , _______  , _______  , _______  , KC_BTN5
   ),
 };
 // clang-format on
