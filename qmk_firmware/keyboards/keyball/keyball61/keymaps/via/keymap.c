@@ -40,8 +40,8 @@ LT(1,KC_QUOT), KC_LCTL  , KC_LALT  , KC_LGUI,LT(1,KC_LNG2),LT(2,KC_SPC),LT(3,KC_
 
   [2] = LAYOUT_universal(
     KC_BRMU  , _______  , _______  , _______  , _______  , _______  ,                                  KC_HOME  , _______  , _______  , _______  ,KC_KB_MUTE,KC_KB_VOLUME_UP,
-    KC_BRMD  , _______  , KC_7     , KC_8     , KC_9     , _______  ,                                  KC_END   , KC_LEFT  , KC_UP    , KC_RGHT  , _______  ,KC_KB_VOLUME_DOWN,
-    _______  , _______  , KC_4     , KC_5     , KC_6     ,S(KC_SCLN),                                  KC_PGUP  , KC_BTN1  , KC_DOWN  , KC_BTN2  , KC_BTN3  , _______  ,
+    KC_BRMD  , _______  , KC_7     , KC_8     , KC_9     , _______  ,                                  KC_END   , KC_WH_R  , KC_WH_D  , KC_WH_L  , _______  ,KC_KB_VOLUME_DOWN,
+    _______  , _______  , KC_4     , KC_5     , KC_6     ,S(KC_SCLN),                                  KC_PGUP  , KC_BTN1  , KC_WH_U  , KC_BTN2  , KC_BTN3  , _______  ,
     _______  , _______  , KC_1     , KC_2     , KC_3     ,S(KC_MINS), S(KC_8)  ,            KC_BTN4  , KC_PGDN  , _______  , _______  , _______  , _______  , _______  ,
     _______  , _______  , KC_0     , KC_DOT   , _______  , _______  , _______  ,            _______  , _______  , _______  , _______  , _______  , _______  , KC_BTN5
   ),
