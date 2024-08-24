@@ -109,6 +109,9 @@ enum keyball_keycodes {
     SSNP_HOR = QK_KB_14, // Set scroll snap mode as horizontal
     SSNP_FRE = QK_KB_15, // Set scroll snap mode as disable (free scroll)
 
+    SREV_VRT = QK_KB_16, // Reverse vertical scroll direction
+    SREV_HOR = QK_KB_17, // Reverse horizontal scroll direction
+
     // Auto mouse layer control keycodes.
     // Only works when POINTING_DEVICE_AUTO_MOUSE_ENABLE is defined.
     AML_TO   = QK_KB_10, // Toggle automatic mouse layer
@@ -131,6 +134,7 @@ typedef union {
 #if KEYBALL_SCROLLSNAP_ENABLE == 2
         uint8_t ssnap : 2; // scroll snap mode
 #endif
+        uint8_t srev : 2; // scroll reverse mode
     };
 } keyball_config_t;
 
@@ -150,6 +154,11 @@ typedef enum {
     KEYBALL_SCROLLSNAP_MODE_HORIZONTAL = 1,
     KEYBALL_SCROLLSNAP_MODE_FREE       = 2,
 } keyball_scrollsnap_mode_t;
+
+enum {
+    KEYBALL_SCROLL_REVERSE_VERTICAL   = 1,
+    KEYBALL_SCROLL_REVERSE_HORIZONTAL = 2,
+};
 
 typedef struct {
     bool this_have_ball;
@@ -172,6 +181,7 @@ typedef struct {
 #elif KEYBALL_SCROLLSNAP_ENABLE == 2
     keyball_scrollsnap_mode_t scrollsnap_mode;
 #endif
+    uint8_t  scroll_reverse_mode;
 
     uint16_t       last_kc;
     keypos_t       last_pos;

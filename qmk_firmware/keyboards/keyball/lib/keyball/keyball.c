@@ -233,6 +233,13 @@ __attribute__((weak)) void keyball_on_apply_motion_to_mouse_scroll(keyball_motio
             break;
     }
 #endif
+
+    if (keyball.scroll_reverse_mode & KEYBALL_SCROLL_REVERSE_VERTICAL) {
+        r->v = -r->v;
+    }
+    if (keyball.scroll_reverse_mode & KEYBALL_SCROLL_REVERSE_HORIZONTAL) {
+        r->h = -r->h;
+    }
 }
 
 static void motion_to_mouse(keyball_motion_t *m, report_mouse_t *r, bool is_left, bool as_scroll) {
@@ -441,9 +448,11 @@ void keyball_oled_render_ballinfo(void) {
     } else {
         oled_write_P(LFSTR_OFF, false);
     }
+    const char *srev_str[] = {" ", "|", "-", "+"};
+    oled_write(srev_str[keyball.scroll_reverse_mode], false);
 
     // indicate scroll divider:
-    oled_write_P(PSTR(" \xC0\xC1"), false);
+    oled_write_P(PSTR("\xC0\xC1"), false);
     oled_write_char('0' + keyball_get_scroll_div(), false);
 #endif
 }
@@ -595,6 +604,7 @@ void keyboard_post_init_kb(void) {
 #if KEYBALL_SCROLLSNAP_ENABLE == 2
         keyball_set_scrollsnap_mode(c.ssnap);
 #endif
+        keyball.scroll_reverse_mode = c.srev;
     }
 
     keyball_on_adjust_layout(KEYBALL_ADJUST_PENDING);
@@ -688,6 +698,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
                 set_auto_mouse_enable(false);
                 set_auto_mouse_timeout(AUTO_MOUSE_TIME);
 #endif
+                keyball.scroll_reverse_mode = 0;
                 break;
             case KBC_SAVE: {
                 keyball_config_t c = {
@@ -700,6 +711,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
 #if KEYBALL_SCROLLSNAP_ENABLE == 2
                     .ssnap = keyball_get_scrollsnap_mode(),
 #endif
+                    .srev = keyball.scroll_reverse_mode,
                 };
                 eeconfig_update_kb(c.raw);
             } break;
@@ -738,6 +750,13 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
                 keyball_set_scrollsnap_mode(KEYBALL_SCROLLSNAP_MODE_FREE);
                 break;
 #endif
+
+            case SREV_VRT:
+                keyball.scroll_reverse_mode ^= KEYBALL_SCROLL_REVERSE_VERTICAL;
+                break;
+            case SREV_HOR:
+                keyball.scroll_reverse_mode ^= KEYBALL_SCROLL_REVERSE_HORIZONTAL;
+                break;
 
 #ifdef POINTING_DEVICE_AUTO_MOUSE_ENABLE
             case AML_TO:
