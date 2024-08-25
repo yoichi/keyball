@@ -118,6 +118,23 @@ static char to_1x(uint8_t x) {
     x &= 0x0f;
     return x < 10 ? x + '0' : x + 'a' - 10;
 }
+
+static const char *ball_status_str(bool is_keyboard_master, bool have_ball) {
+    if (have_ball) {
+        if (is_keyboard_master) {
+            return "@";
+        } else {
+            return "o";
+        }
+    } else {
+        if (is_keyboard_master) {
+            return "+";
+        } else {
+            return "-";
+        }
+    }
+}
+
 #endif
 
 static void add_cpi(int8_t delta) {
@@ -413,8 +430,15 @@ void keyball_oled_render_ballinfo(void) {
     oled_write(format_4d(keyball.last_mouse.h), false);
     oled_write(format_4d(keyball.last_mouse.v), false);
 
-    // 2nd line, empty label and CPI
-    oled_write_P(PSTR("    \xB1\xBC\xBD"), false);
+    // 2nd line, ball status and CPI
+    if (is_keyboard_left()) {
+        oled_write(ball_status_str(is_keyboard_master(), keyball.this_have_ball), false);  // left
+        oled_write(ball_status_str(!is_keyboard_master(), keyball.that_have_ball), false); // right
+    } else {
+        oled_write(ball_status_str(!is_keyboard_master(), keyball.that_have_ball), false); // left
+        oled_write(ball_status_str(is_keyboard_master(), keyball.this_have_ball), false);  // right
+    }
+    oled_write_P(PSTR("  \xB1\xBC\xBD"), false);
 #ifdef DISPLAY_PMW3360_CPI_VALUE
     if (!is_keyboard_master() && keyball.this_have_ball) {
         oled_write(format_4d(pmw3360_cpi_get()+1) + 1, false);
