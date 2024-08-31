@@ -47,7 +47,7 @@ LCTL_T(KC_QUOT),KC_A    , KC_S     , KC_D     , KC_F     , KC_G     ,           
   ),
 
   [3] = LAYOUT_universal(
-    _______  , AML_TO   , AML_I50  , AML_D50  , _______  , _______  ,                                  SSNP_FRE , SSNP_VRT , SSNP_HOR , SREV_VRT , SREV_HOR , _______  ,
+    _______  , AML_TO   , AML_I50  , AML_D50  , _______  , EE_CLR   ,                                  SSNP_FRE , SSNP_VRT , SSNP_HOR , SREV_VRT , SREV_HOR , _______  ,
     _______  , _______  , _______  , _______  , _______  , _______  ,                                  _______  , KC_LEFT  , KC_UP    , KC_RGHT  , _______  , _______  ,
     KBC_RST  , KBC_SAVE , CPI_D1K  , CPI_D100 , CPI_I100 , CPI_I1K  ,                                  KC_PGUP  , _______  , KC_DOWN  , _______  , KC_BTN3  , _______  ,
     KC_BTN1  , _______  , SCRL_DVD , SCRL_DVI , SCRL_MO  , SCRL_TO  , _______  ,            KC_BTN4  , KC_PGDN  , _______  , _______  , _______  , _______  , KC_BTN1  ,
