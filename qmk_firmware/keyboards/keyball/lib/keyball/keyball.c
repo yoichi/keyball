@@ -16,6 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "quantum.h"
+#include "crc.h"
 #ifdef SPLIT_KEYBOARD
 #    include "transactions.h"
 #endif
@@ -53,6 +54,10 @@ keyball_t keyball = {
 
     .pressing_keys = { BL, BL, BL, BL, BL, BL, 0 },
 };
+
+#ifdef DISPLAY_TRANSPORT_ERROR
+static uint8_t s_transport_error = 0;
+#endif
 
 //////////////////////////////////////////////////////////////////////////////
 // Hook points
@@ -317,8 +322,9 @@ report_mouse_t pointing_device_driver_get_report(report_mouse_t rep) {
 
 static void rpc_get_info_handler(uint8_t in_buflen, const void *in_data, uint8_t out_buflen, void *out_data) {
     keyball_info_t info = {
-        .ballcnt = keyball.this_have_ball ? 1 : 0,
+        .payload = {.ballcnt = keyball.this_have_ball ? 1 : 0},
     };
+    info.checksum = crc8(&info.payload, sizeof(info.payload));
     *(keyball_info_t *)out_data = info;
     keyball_on_adjust_layout(KEYBALL_ADJUST_SECONDARY);
 }
@@ -339,10 +345,15 @@ static void rpc_get_info_invoke(void) {
             dprintf("keyball:rpc_get_info_invoke: missed #%d\n", round);
             return;
         }
+    } else if (crc8(&recv.payload, sizeof(recv.payload)) != recv.checksum) {
+#ifdef DISPLAY_TRANSPORT_ERROR
+        s_transport_error++;
+#endif
+        return;
     }
     negotiated             = true;
     keyball.that_enable    = true;
-    keyball.that_have_ball = recv.ballcnt > 0;
+    keyball.that_have_ball = recv.payload.ballcnt > 0;
     dprintf("keyball:rpc_get_info_invoke: negotiated #%d %d\n", round, keyball.that_have_ball);
 
     // split keyboard negotiation completed.
@@ -361,7 +372,9 @@ static void rpc_get_info_invoke(void) {
 }
 
 static void rpc_get_motion_handler(uint8_t in_buflen, const void *in_data, uint8_t out_buflen, void *out_data) {
-    *(keyball_motion_t *)out_data = keyball.this_motion;
+    keyball_motion_transport_t *resp = (keyball_motion_transport_t *)out_data;
+    resp->payload = keyball.this_motion;
+    resp->checksum = crc8(&resp->payload, sizeof(resp->payload));
     // clear motion
     keyball.this_motion.x = 0;
     keyball.this_motion.y = 0;
@@ -373,24 +386,38 @@ static void rpc_get_motion_invoke(void) {
     if (TIMER_DIFF_32(now, last_sync) < KEYBALL_TX_GETMOTION_INTERVAL) {
         return;
     }
-    keyball_motion_t recv = {0};
+    keyball_motion_transport_t recv = {0};
     if (transaction_rpc_exec(KEYBALL_GET_MOTION, 0, NULL, sizeof(recv), &recv)) {
-        keyball.that_motion.x = add16(keyball.that_motion.x, recv.x);
-        keyball.that_motion.y = add16(keyball.that_motion.y, recv.y);
+        if (crc8(&recv.payload, sizeof(recv.payload)) == recv.checksum) {
+            keyball.that_motion.x = add16(keyball.that_motion.x, recv.payload.x);
+            keyball.that_motion.y = add16(keyball.that_motion.y, recv.payload.y);
+#ifdef DISPLAY_TRANSPORT_ERROR
+        } else {
+            s_transport_error++;
+#endif
+        }
     }
     last_sync = now;
     return;
 }
 
 static void rpc_set_cpi_handler(uint8_t in_buflen, const void *in_data, uint8_t out_buflen, void *out_data) {
-    keyball_set_cpi(*(keyball_cpi_t *)in_data);
+    keyball_cpi_t *req = (keyball_cpi_t *)in_data;
+    if (crc8(&req->payload, sizeof(req->payload)) == req->checksum) {
+        keyball_set_cpi(req->payload.cpi_value);
+#ifdef DISPLAY_TRANSPORT_ERROR
+    } else {
+        s_transport_error++;
+#endif
+    }
 }
 
 static void rpc_set_cpi_invoke(void) {
     if (!keyball.cpi_changed) {
         return;
     }
-    keyball_cpi_t req = keyball.cpi_value;
+    keyball_cpi_t req = {.payload = {.cpi_value = keyball.cpi_value}};
+    req.checksum = crc8(&req.payload, sizeof(req.payload));
     if (!transaction_rpc_send(KEYBALL_SET_CPI, sizeof(req), &req)) {
         return;
     }
@@ -438,7 +465,22 @@ void keyball_oled_render_ballinfo(void) {
         oled_write(ball_status_str(!is_keyboard_master(), keyball.that_have_ball), false); // left
         oled_write(ball_status_str(is_keyboard_master(), keyball.this_have_ball), false);  // right
     }
+#ifdef DISPLAY_TRANSPORT_ERROR
+    // transport error count
+    if (s_transport_error & 0xf0) {
+        oled_write_char(to_1x(s_transport_error >> 4), false);
+    } else {
+        oled_write_char(' ', false);
+    }
+    if (s_transport_error) {
+        oled_write_char(to_1x(s_transport_error), false);
+    } else {
+        oled_write_char(' ', false);
+    }
+    oled_write_P(PSTR("\xB1\xBC\xBD"), false);
+#else
     oled_write_P(PSTR("  \xB1\xBC\xBD"), false);
+#endif
 #ifdef DISPLAY_PMW3360_CPI_VALUE
     if (!is_keyboard_master() && keyball.this_have_ball) {
         oled_write(format_4d(pmw3360_cpi_get()+1) + 1, false);

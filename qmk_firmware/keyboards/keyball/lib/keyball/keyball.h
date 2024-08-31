@@ -139,7 +139,10 @@ typedef union {
 } keyball_config_t;
 
 typedef struct {
-    uint8_t ballcnt; // count of balls: support only 0 or 1, for now
+    uint8_t checksum;
+    struct {
+        uint8_t ballcnt; // count of balls: support only 0 or 1, for now
+    } payload;
 } keyball_info_t;
 
 typedef struct {
@@ -147,7 +150,17 @@ typedef struct {
     int16_t y;
 } keyball_motion_t;
 
-typedef uint8_t keyball_cpi_t;
+typedef struct {
+    uint8_t checksum;
+    keyball_motion_t payload;
+} keyball_motion_transport_t;
+
+typedef struct {
+    uint8_t checksum;
+    struct {
+        uint8_t cpi_value;
+    } payload;
+} keyball_cpi_t;
 
 typedef enum {
     KEYBALL_SCROLLSNAP_MODE_VERTICAL   = 0,
