@@ -35,7 +35,7 @@ LCTL_T(KC_QUOT),KC_A    , KC_S     , KC_D     , KC_F     , KC_G     ,           
     _______  , KC_1     , KC_2     , KC_3     , KC_4     , KC_5     ,                                  KC_6     , KC_7     , KC_8     , KC_9     , KC_0     , KC_F12   ,
     _______  , _______  , KC_HOME  , KC_PGDN  , KC_PGUP  , KC_END   ,                                  KC_LEFT  , KC_DOWN  , KC_UP    , KC_RGHT  , KC_INS   , _______  ,
     _______  , KC_F1    , KC_F2    , KC_F3    , KC_F4    , KC_F5    , KC_INT1  ,            KC_CAPS  , KC_F6    , KC_F7    , KC_F8    , KC_F9    , KC_F10   , _______  ,
-    _______  , _______  , _______  , _______  , _______  , KC_DEL   , KC_INT3  ,            KC_HOME  , KC_END   , _______  , _______  , _______  , _______  , _______
+    _______  , _______  , _______  , _______  , KC_HOME  , KC_DEL   , KC_INT3  ,            _______  , KC_END   , _______  , _______  , _______  , _______  , _______
   ),
 
   [2] = LAYOUT_universal(
@@ -43,7 +43,7 @@ LCTL_T(KC_QUOT),KC_A    , KC_S     , KC_D     , KC_F     , KC_G     ,           
     KC_BRMD  , _______  , _______  , _______  , _______  , _______  ,                                  _______  , KC_WH_R  , KC_WH_D  , KC_WH_L  , _______  ,KC_KB_VOLUME_DOWN,
     _______  , _______  , _______  , _______  , _______  , _______  ,                                  KC_PGUP  , _______  , KC_WH_U  , _______  , KC_BTN3  , _______  ,
     KC_BTN1  , _______  , _______  , _______  , _______  , _______  , _______  ,            KC_BTN4  , KC_PGDN  , _______  , _______  , _______  , _______  , KC_BTN1  ,
-    _______  , KC_BTN3  , KC_BTN2  , KC_BTN1  , _______  , _______  , _______  ,            _______  , _______  , _______  , _______  , _______  , KC_BTN5  , KC_BTN2
+    _______  , KC_BTN3  , KC_BTN2  , _______  , KC_BTN1  , _______  , _______  ,            _______  , _______  , _______  , _______  , _______  , KC_BTN5  , KC_BTN2
   ),
 
   [3] = LAYOUT_universal(
@@ -51,7 +51,7 @@ LCTL_T(KC_QUOT),KC_A    , KC_S     , KC_D     , KC_F     , KC_G     ,           
     _______  , _______  , _______  , _______  , _______  , _______  ,                                  _______  , KC_LEFT  , KC_UP    , KC_RGHT  , _______  , _______  ,
     KBC_RST  , KBC_SAVE , CPI_D1K  , CPI_D100 , CPI_I100 , CPI_I1K  ,                                  KC_PGUP  , _______  , KC_DOWN  , _______  , KC_BTN3  , _______  ,
     KC_BTN1  , _______  , SCRL_DVD , SCRL_DVI , SCRL_MO  , SCRL_TO  , _______  ,            KC_BTN4  , KC_PGDN  , _______  , _______  , _______  , _______  , KC_BTN1  ,
-    _______  , KC_BTN3  , KC_BTN2  , KC_BTN1  , _______  , _______  , _______  ,            _______  , _______  , _______  , _______  , _______  , KC_BTN5  , KC_BTN2
+    _______  , KC_BTN3  , KC_BTN2  , _______  , KC_BTN1  , _______  , _______  ,            _______  , _______  , _______  , _______  , _______  , KC_BTN5  , KC_BTN2
   ),
 };
 // clang-format on
