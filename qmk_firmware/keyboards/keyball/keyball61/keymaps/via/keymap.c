@@ -19,6 +19,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include QMK_KEYBOARD_H
 
 #include "quantum.h"
+#include "os_detection.h"
+#include "keycode_config.h"
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -55,6 +57,25 @@ LCTL_T(KC_QUOT),KC_A    , KC_S     , KC_D     , KC_F     , KC_G     ,           
   ),
 };
 // clang-format on
+
+#if defined(OS_DETECTION_ENABLE) && defined(DEFERRED_EXEC_ENABLE)
+uint32_t os_detect_callback(uint32_t trigger_time, void *cb_arg) {
+    switch (detected_host_os()) {
+    case OS_WINDOWS:
+        keymap_config.swap_lalt_lgui = true;
+        break;
+    default:
+        break;
+    }
+    return 0;
+}
+#endif
+
+void keyboard_post_init_user(void) {
+#if defined(OS_DETECTION_ENABLE) && defined(DEFERRED_EXEC_ENABLE)
+    defer_exec(200, os_detect_callback, NULL);
+#endif
+}
 
 layer_state_t layer_state_set_user(layer_state_t state) {
     // Auto enable scroll mode when the highest layer is 3
