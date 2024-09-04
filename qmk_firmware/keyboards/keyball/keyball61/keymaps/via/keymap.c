@@ -72,6 +72,9 @@ uint32_t os_detect_callback(uint32_t trigger_time, void *cb_arg) {
 #endif
 
 void keyboard_post_init_user(void) {
+#ifdef CONSOLE_ENABLE
+    debug_enable = true;
+#endif
 #if defined(OS_DETECTION_ENABLE) && defined(DEFERRED_EXEC_ENABLE)
     defer_exec(200, os_detect_callback, NULL);
 #endif
