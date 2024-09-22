@@ -134,7 +134,6 @@ typedef union {
 #if KEYBALL_SCROLLSNAP_ENABLE == 2
         uint8_t ssnap : 2; // scroll snap mode
 #endif
-        uint8_t srev : 2; // scroll reverse mode
     };
 } keyball_config_t;
 
@@ -277,6 +276,16 @@ uint8_t keyball_get_scroll_div(void);
 /// Valid values are between 1 and 7, KEYBALL_SCROLL_DIV_DEFAULT is used when 0
 /// is specified.
 void keyball_set_scroll_div(uint8_t div);
+
+/// keyball_get_scroll_reverse_mode gets current scroll directions.
+/// See also keyball_set_scroll_reverse_mode for the detail.
+uint8_t keyball_get_scroll_reverse_mode(void);
+
+/// keyball_set_scroll_reverse_mode changes scroll directions.
+///
+/// The directions are described by the mode which is composition of the flags
+/// KEYBALL_SCROLL_REVERSE_VERTICAL and KEYBALL_SCROLL_REVERSE_HORIZONTAL.
+void keyball_set_scroll_reverse_mode(uint8_t mode);
 
 /// keyball_get_cpi gets current CPI of trackball.
 /// The actual CPI value is the returned value +1 and multiplied by 100:
