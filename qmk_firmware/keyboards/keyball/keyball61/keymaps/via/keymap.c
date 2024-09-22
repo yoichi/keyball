@@ -20,7 +20,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "quantum.h"
 #include "os_detection.h"
-#include "keycode_config.h"
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -42,9 +41,9 @@ LCTL_T(KC_ESC),KC_A     , KC_S     , KC_D     , KC_F     , KC_G     ,           
 
   [2] = LAYOUT_universal(
     KC_BRMU  , _______  , _______  , _______  , _______  , _______  ,                                  _______  , _______  , _______  , _______  ,KC_KB_MUTE,KC_KB_VOLUME_UP,
-    KC_BRMD  , _______  , _______  , _______  , _______  , _______  ,                                  _______  , KC_WH_R  , KC_WH_D  , KC_WH_L  , _______  ,KC_KB_VOLUME_DOWN,
-    _______  , _______  , _______  , _______  , _______  , _______  ,                                  KC_PGUP  , _______  , KC_WH_U  , _______  , _______  , _______  ,
-    _______  , _______  , _______  , _______  , _______  , _______  , _______  ,         RALT(KC_GRV), KC_PGDN  , _______  , _______  , _______  , _______  , _______  ,
+    KC_BRMD  , _______  , _______  , _______  , _______  , _______  ,                                  _______  , _______  , _______  , _______  , _______  ,KC_KB_VOLUME_DOWN,
+    _______  , _______  , _______  , _______  , _______  , _______  ,                                  KC_PGUP  , _______  , _______  , _______  , KC_WH_U  , _______  ,
+    KC_WH_L  , _______  , _______  , _______  , _______  , _______  , _______  ,         RALT(KC_GRV), KC_PGDN  , _______  , _______  , _______  , KC_WH_D  , KC_WH_R  ,
     _______  , KC_BTN3  , KC_BTN2  , _______  , KC_BTN1  , _______  , _______  ,            _______  , _______  , _______  , _______  , _______  , _______  , _______
   ),
 
@@ -64,6 +63,11 @@ uint32_t os_detect_callback(uint32_t trigger_time, void *cb_arg) {
     case OS_WINDOWS:
         keymap_config.swap_lalt_lgui = true;
         break;
+    case OS_MACOS: {
+        uint8_t mode = KEYBALL_SCROLL_REVERSE_VERTICAL | KEYBALL_SCROLL_REVERSE_HORIZONTAL;
+        keyball_set_scroll_reverse_mode(mode);
+        break;
+    }
     default:
         break;
     }
