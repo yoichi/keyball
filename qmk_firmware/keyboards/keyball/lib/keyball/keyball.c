@@ -20,6 +20,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifdef SPLIT_KEYBOARD
 #    include "transactions.h"
 #endif
+#ifdef OS_DETECTION_ENABLE
+#    include "os_detection.h"
+#endif
 
 #include "keyball.h"
 #include "drivers/pmw3360/pmw3360.h"
@@ -544,8 +547,30 @@ void keyball_oled_render_keyinfo(void) {
     //     Key :  R2  C3 K06 abc
     //     Ball:   0   0   0   0
 
+#ifdef OS_DETECTION_ENABLE
+    switch (detected_host_os()) {
+    case OS_LINUX:
+        oled_write_char('L', false);
+        break;
+    case OS_WINDOWS:
+        oled_write_char('W', false);
+        break;
+    case OS_MACOS:
+        oled_write_char('m', false);
+        break;
+    case OS_IOS:
+        oled_write_char('i', false);
+        break;
+    default:
+        oled_write_char('?', false);
+        break;
+    }
+    // "Key" Label
+    oled_write_P(PSTR("Key\xB1"), false);
+#else
     // "Key" Label
     oled_write_P(PSTR("Key \xB1"), false);
+#endif
 
     // Row and column
     oled_write_char('\xB8', false);
