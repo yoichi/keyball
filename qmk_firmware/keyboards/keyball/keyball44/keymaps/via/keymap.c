@@ -27,8 +27,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_universal(
     KC_TAB   , KC_Q     , KC_W     , KC_E    , KC_R     , KC_T     ,                                         KC_Y     , KC_U     , KC_I     , KC_O     , KC_P     , LT(3,KC_BSLS),
 LCTL_T(KC_ESC),KC_A     , KC_S     , KC_D    , KC_F     , KC_G     ,                                         KC_H     , KC_J     , KC_K     , KC_L     , KC_SCLN  , RCTL_T(KC_EQL),
-    KC_LSFT  ,LT(1,KC_Z), KC_X     , KC_C    , KC_V     , KC_B     ,                                         KC_N     , KC_M     , KC_COMM  , KC_DOT,LT(1,KC_SLSH), KC_RSFT  ,
-                  KC_LALT  , KC_LGUI , KC_LCTL  ,         KC_SPC   , MO(3)    ,                   KC_BSPC,LT(2,KC_ENT), _______       , _______  , KC_RALT
+    KC_LSFT  , KC_Z     , KC_X     , KC_C    , KC_V     , KC_B     ,                                         KC_N     , KC_M     , KC_COMM  , KC_DOT   , KC_SLSH  , KC_RSFT  ,
+                  KC_LALT  , KC_LGUI , MO(1)    ,         KC_SPC   , MO(3)    ,                   KC_BSPC,LT(2,KC_ENT), _______       , _______  , KC_RALT
   ),
 
   [1] = LAYOUT_universal(
@@ -42,14 +42,14 @@ LCTL_T(KC_ESC),KC_A     , KC_S     , KC_D    , KC_F     , KC_G     ,            
     KC_BRMU  ,  _______ , _______  , _______ , _______  , _______  ,                                         _______  , _______  , _______  , _______  , _______  ,KC_KB_VOLUME_UP,
     KC_BRMD  ,  _______ , _______  , _______ , _______  , _______  ,                                         _______  , _______  , _______  , _______  , KC_WH_U  ,KC_KB_VOLUME_DOWN,
     KC_WH_L  ,  _______ , _______  , _______ , _______  , _______  ,                                         _______  , _______  , _______  , _______  , KC_WH_D  , KC_WH_R  ,
-                  KC_BTN2  , _______ , KC_BTN1  ,         _______  , _______  ,                   _______  , _______  , _______       , _______  , KC_KB_MUTE
+                  KC_BTN2  , _______ , KC_BTN1  ,        G(KC_SPC) , _______  ,                   _______  , _______  , _______       , _______  , KC_KB_MUTE
   ),
 
   [3] = LAYOUT_universal(
     _______  , AML_TO   , AML_I50  , AML_D50 , _______  , EE_CLR   ,                                         SSNP_FRE , SSNP_VRT , SSNP_HOR , SREV_VRT , SREV_HOR , _______  ,
     KBC_RST  , KBC_SAVE , CPI_D1K  , CPI_D100, CPI_I100 , CPI_I1K  ,                                         KC_PGUP  , _______  , _______  , _______  , _______  , KC_INT1  ,
     _______  , _______  , SCRL_DVD , SCRL_DVI, _______  , _______  ,                                         KC_PGDN  , AG_LSWP  , AG_LNRM  , _______  , _______  , KC_INT3  ,
-                  KC_BTN2  , _______ , KC_BTN1  ,         _______  , _______  ,                   _______  , _______  , _______       , _______  , _______
+                  KC_BTN2  , _______ , KC_BTN1  ,         _______  , _______  ,                RALT(KC_GRV), _______  , _______       , _______  , _______
   ),
 };
 // clang-format on
