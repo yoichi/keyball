@@ -194,6 +194,9 @@ typedef struct {
     keyball_scrollsnap_mode_t scrollsnap_mode;
 #endif
     uint8_t  scroll_reverse_mode;
+#ifdef OS_DETECTION_ENABLE
+    uint8_t  detected_host_os;
+#endif
 
     uint16_t       last_kc;
     keypos_t       last_pos;

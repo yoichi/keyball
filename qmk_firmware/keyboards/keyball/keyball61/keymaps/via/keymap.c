@@ -59,7 +59,8 @@ LCTL_T(KC_ESC),KC_A     , KC_S     , KC_D     , KC_F     , KC_G     ,           
 
 #if defined(OS_DETECTION_ENABLE) && defined(DEFERRED_EXEC_ENABLE)
 uint32_t os_detect_callback(uint32_t trigger_time, void *cb_arg) {
-    switch (detected_host_os()) {
+    keyball.detected_host_os = detected_host_os();
+    switch (keyball.detected_host_os) {
     case OS_WINDOWS:
         keymap_config.swap_lalt_lgui = true;
         break;

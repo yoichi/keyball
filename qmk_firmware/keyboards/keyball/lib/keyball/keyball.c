@@ -548,7 +548,7 @@ void keyball_oled_render_keyinfo(void) {
     //     Ball:   0   0   0   0
 
 #ifdef OS_DETECTION_ENABLE
-    switch (detected_host_os()) {
+    switch (keyball.detected_host_os) {
     case OS_LINUX:
         oled_write_char('L', false);
         break;
