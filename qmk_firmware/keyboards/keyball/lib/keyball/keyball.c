@@ -614,7 +614,13 @@ void keyball_oled_render_layerinfo(void) {
     oled_write(format_4d(get_auto_mouse_timeout() / 10) + 1, false);
     oled_write_char('0', false);
 #    else
+#if 0
     oled_write_P(PSTR("\xC2\xC3\xB4\xB5 ---"), false);
+#else
+    oled_write_P(PSTR("swap: "), false);
+    oled_write_char(keymap_config.swap_lalt_lgui ? 'L' : '-', false);
+    oled_write_char(keymap_config.swap_ralt_rgui ? 'R' : '-', false);
+#endif
 #    endif
 #endif
 }
