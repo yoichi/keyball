@@ -32,9 +32,9 @@ LCTL_T(KC_ESC),KC_A     , KC_S     , KC_D    , KC_F     , KC_G     ,            
   ),
 
   [1] = LAYOUT_universal(
-    _______  ,  KC_1    , KC_2     , KC_3    , KC_4     , KC_5     ,                                         KC_6     , KC_7     , KC_8     , KC_9     , KC_0     , _______  ,
+    G(KC_SPC),  KC_1    , KC_2     , KC_3    , KC_4     , KC_5     ,                                         KC_6     , KC_7     , KC_8     , KC_9     , KC_0     , _______  ,
     _______  ,  KC_BSLS , KC_GRV   , KC_QUOT , KC_LBRC  , KC_RBRC  ,                                         KC_LEFT  , KC_DOWN  , KC_UP    , KC_RGHT  , KC_INS   , _______  ,
-    _______  ,  _______ , _______  , _______ , _______  , _______  ,                                         _______  , _______  , _______  , _______  , KC_CAPS  , _______  ,
+    _______  ,  _______ , _______  , _______ , _______  , _______  ,                                         KC_INT1  ,S(KC_INT1), KC_INT3  ,S(KC_INT3), KC_CAPS  , _______  ,
                   _______  , _______ , _______  ,         KC_HOME  , KC_DEL   ,                   _______  , KC_END   , _______       , _______  , _______
   ),
 
@@ -47,8 +47,8 @@ LCTL_T(KC_ESC),KC_A     , KC_S     , KC_D    , KC_F     , KC_G     ,            
 
   [3] = LAYOUT_universal(
     _______  , _______  , _______  , _______ , _______  , EE_CLR   ,                                         SSNP_FRE , SSNP_VRT , SSNP_HOR , SREV_VRT , SREV_HOR , _______  ,
-    KBC_RST  , KBC_SAVE , CPI_D1K  , CPI_D100, CPI_I100 , CPI_I1K  ,                                         KC_PGUP  , AG_RSWP  , AG_RNRM  ,KC_BRMU,KC_KB_VOLUME_UP, KC_INT1,
-    _______  , _______  , SCRL_DVD , SCRL_DVI, _______  , _______  ,                                         KC_PGDN  , AG_LSWP  , AG_LNRM  ,KC_BRMD,KC_KB_VOLUME_DOWN,KC_INT3,
+    KBC_RST  , KBC_SAVE , CPI_D1K  , CPI_D100, CPI_I100 , CPI_I1K  ,                                         KC_PGUP  , AG_RSWP  , AG_RNRM  ,KC_BRMU,KC_KB_VOLUME_UP, _______,
+    _______  , _______  , SCRL_DVD , SCRL_DVI, _______  , _______  ,                                         KC_PGDN  , AG_LSWP  , AG_LNRM  ,KC_BRMD,KC_KB_VOLUME_DOWN,_______,
                   _______  , _______ , _______  ,         KC_WH_L  , _______  ,                RALT(KC_GRV), KC_WH_R  , _______       , _______  , KC_KB_MUTE
   ),
 };
