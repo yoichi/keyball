@@ -60,10 +60,12 @@ uint32_t os_detect_callback(uint32_t trigger_time, void *cb_arg) {
     switch (keyball.detected_host_os) {
     case OS_WINDOWS:
         keymap_config.swap_lalt_lgui = true;
+        keymap_config.swap_ralt_rgui = false;
         break;
     case OS_MACOS: {
         uint8_t mode = KEYBALL_SCROLL_REVERSE_VERTICAL | KEYBALL_SCROLL_REVERSE_HORIZONTAL;
         keyball_set_scroll_reverse_mode(mode);
+        keymap_config.swap_lalt_lgui = false;
         keymap_config.swap_ralt_rgui = true;
         break;
     }
