@@ -10,7 +10,7 @@ MOUSEKEY_ENABLE = yes
 OS_DETECTION_ENABLE = yes
 DEFERRED_EXEC_ENABLE = yes
 
-# Enabled for AG_*
+# Enabled for process_magic
 MAGIC_ENABLE = yes
 
 # for debug

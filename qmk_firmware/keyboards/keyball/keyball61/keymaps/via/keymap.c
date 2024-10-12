@@ -60,23 +60,31 @@ LCTL_T(KC_ESC),KC_A     , KC_S     , KC_D     , KC_F     , KC_G     ,           
 #if defined(OS_DETECTION_ENABLE) && defined(DEFERRED_EXEC_ENABLE)
 uint32_t os_detect_callback(uint32_t trigger_time, void *cb_arg) {
     keyball.detected_host_os = detected_host_os();
+#ifdef MAGIC_KEYCODE_ENABLE
     keymap_config.raw = eeconfig_read_keymap();
+#endif
     switch (keyball.detected_host_os) {
     case OS_WINDOWS:
+#ifdef MAGIC_KEYCODE_ENABLE
         keymap_config.swap_lalt_lgui = true;
         keymap_config.swap_ralt_rgui = false;
+#endif
         break;
     case OS_MACOS: {
         uint8_t mode = KEYBALL_SCROLL_REVERSE_VERTICAL | KEYBALL_SCROLL_REVERSE_HORIZONTAL;
         keyball_set_scroll_reverse_mode(mode);
+#ifdef MAGIC_KEYCODE_ENABLE
         keymap_config.swap_lalt_lgui = false;
         keymap_config.swap_ralt_rgui = true;
+#endif
         break;
     }
     default:
         break;
     }
+#ifdef MAGIC_KEYCODE_ENABLE
     eeconfig_update_keymap(keymap_config.raw);
+#endif
     return 0;
 }
 #endif
