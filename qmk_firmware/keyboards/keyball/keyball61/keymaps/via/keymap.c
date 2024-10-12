@@ -86,7 +86,7 @@ void keyboard_post_init_user(void) {
     debug_enable = true;
 #endif
 #if defined(OS_DETECTION_ENABLE) && defined(DEFERRED_EXEC_ENABLE)
-    defer_exec(200, os_detect_callback, NULL);
+    defer_exec(100, os_detect_callback, NULL);
 #endif
 }
 
