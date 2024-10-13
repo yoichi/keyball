@@ -28,14 +28,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  LT(2,KC_TAB), KC_Q     , KC_W     , KC_E    , KC_R     , KC_T     ,                                         KC_Y     , KC_U     , KC_I     , KC_O     , KC_P     , LT(1,KC_MINS),
 LCTL_T(KC_ESC),KC_A     , KC_S     , KC_D    , KC_F     , KC_G     ,                                         KC_H     , KC_J     , KC_K     , KC_L     , KC_SCLN  , RCTL_T(KC_EQL),
     KC_LSFT  , KC_Z     , KC_X     , KC_C    , KC_V     , KC_B     ,                                         KC_N     , KC_M     , KC_COMM  , KC_DOT   , KC_SLSH  , KC_RSFT  ,
-                  KC_LALT  , KC_LGUI ,LT(1,KC_BTN1), LT(2,KC_SPC)  , MO(3)    ,                   KC_BSPC,LT(2,KC_ENT), _______       , _______  , KC_RALT
+                  KC_LALT  , KC_LGUI , KC_BTN1  ,    LT(1,KC_SPC)  , MO(3)    ,                   KC_BSPC,LT(2,KC_ENT), _______       , _______  , KC_RALT
   ),
 
   [1] = LAYOUT_universal(
     G(KC_SPC),  KC_1    , KC_2     , KC_3    , KC_4     , KC_5     ,                                         KC_6     , KC_7     , KC_8     , KC_9     , KC_0     , _______  ,
     _______  ,  KC_BSLS , KC_GRV   , KC_QUOT , KC_LBRC  , KC_RBRC  ,                                         KC_LEFT  , KC_DOWN  , KC_UP    , KC_RGHT  , KC_INS   , _______  ,
-    _______  ,  _______ , _______  , _______ , _______  , _______  ,                                         KC_INT1  ,S(KC_INT1), KC_INT3  ,S(KC_INT3), KC_CAPS  , _______  ,
-                  _______  , _______ , _______  ,         KC_HOME  , KC_DEL   ,                   _______  , KC_END   , _______       , _______  , _______
+    _______  ,  _______ , _______  , _______ , _______  , KC_DEL   ,                                         KC_INT1  ,S(KC_INT1), KC_INT3  ,S(KC_INT3), KC_CAPS  , _______  ,
+                  _______  , _______ , KC_HOME  ,         _______  , _______  ,                   _______  , KC_END   , _______       , _______  , _______
   ),
 
   [2] = LAYOUT_universal(
@@ -123,15 +123,4 @@ void oledkit_render_logo_user(void) {
     oledkit_render_info_user();
 }
 #endif
-#endif
-
-#ifdef TAPPING_TERM_PER_KEY
-uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-  case LT(1,KC_BTN1):
-    return 100;
-  default:
-    return TAPPING_TERM;
-  }
-}
 #endif
