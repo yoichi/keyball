@@ -614,7 +614,7 @@ void keyball_oled_render_layerinfo(void) {
     oled_write(format_4d(get_auto_mouse_timeout() / 10) + 1, false);
     oled_write_char('0', false);
 #    else
-#ifndef MAGIC_KEYCODE_ENABLE
+#if !defined(MAGIC_KEYCODE_ENABLE) && !defined(KEYBALL_KEEP_MAGIC_FUNCTIONS)
     oled_write_P(PSTR("\xC2\xC3\xB4\xB5 ---"), false);
 #else
     oled_write_P(PSTR("swap: "), false);
