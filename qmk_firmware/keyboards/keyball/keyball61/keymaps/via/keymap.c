@@ -34,8 +34,8 @@ LCTL_T(KC_ESC),KC_A     , KC_S     , KC_D     , KC_F     , KC_G     ,           
   [1] = LAYOUT_universal(
     _______  , KC_F1    , KC_F2    , KC_F3    , KC_F4    , KC_F5    ,                                  KC_F6    , KC_F7    , KC_F8    , KC_F9    , KC_F10   , KC_F11   ,
     _______  , KC_1     , KC_2     , KC_3     , KC_4     , KC_5     ,                                  KC_6     , KC_7     , KC_8     , KC_9     , KC_0     , KC_F12   ,
-    _______  , KC_PSCR  , KC_GRV   , KC_QUOT  , KC_LBRC  , KC_RBRC  ,                                  KC_LEFT  , KC_DOWN  , KC_UP    , KC_RGHT  , KC_INS   , _______  ,
-    _______  ,A(KC_PSCR), S(KC_GRV),S(KC_QUOT),S(KC_LBRC),S(KC_RBRC), KC_DEL   ,            KC_CAPS  , KC_MINS  ,S(KC_MINS), KC_EQL   , S(KC_EQL),S(KC_BSLS), _______  ,
+    _______  , KC_GRV   , KC_QUOT  , KC_LBRC  , KC_RBRC  , KC_PSCR  ,                                  KC_LEFT  , KC_DOWN  , KC_UP    , KC_RGHT  , KC_INS   , _______  ,
+    _______  , S(KC_GRV),S(KC_QUOT),S(KC_LBRC),S(KC_RBRC),A(KC_PSCR), KC_DEL   ,            KC_CAPS  , KC_MINS  ,S(KC_MINS), KC_EQL   , S(KC_EQL),S(KC_BSLS), _______  ,
     _______  , _______  , _______  , _______  , KC_HOME  , _______  , _______  ,            _______  , KC_END   , _______  , _______  , _______  , _______  , _______
   ),
 
