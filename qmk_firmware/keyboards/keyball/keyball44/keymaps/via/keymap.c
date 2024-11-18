@@ -21,6 +21,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "quantum.h"
 #include "os_detection.h"
 
+enum custom_user_keycodes {
+    IME_TGL = QK_USER_0,
+};
+
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // keymap for default (VIA)
@@ -33,7 +37,7 @@ LCTL_T(KC_ESC),KC_A     , KC_S     , KC_D    , KC_F     , KC_G     ,            
 
   [1] = LAYOUT_universal(
     _______  ,  KC_1    , KC_2     , KC_3    , KC_4     , KC_5     ,                                         KC_6     , KC_7     , KC_8     , KC_9     , KC_0     , _______  ,
-    _______  ,  _______ , _______  , KC_LBRC , KC_RBRC  , KC_BSLS  ,                                         KC_LEFT  , KC_DOWN  , KC_UP    , KC_RGHT  , KC_INS   , _______  ,
+    _______  ,S(KC_HOME), S(KC_END), KC_LBRC , KC_RBRC  , KC_BSLS  ,                                         KC_LEFT  , KC_DOWN  , KC_UP    , KC_RGHT  , KC_INS   , _______  ,
     _______  ,RGUI(KC_1),RGUI(KC_2),RGUI(KC_3),RGUI(KC_4),KC_DEL   ,                                         KC_GRV   , KC_QUOT  , KC_INT1  , KC_INT3  , KC_CAPS  , _______  ,
                   _______  , _______ , KC_HOME  ,         _______  , _______  ,                   _______  , KC_END   , _______       , _______  , _______
   ),
@@ -42,14 +46,14 @@ LCTL_T(KC_ESC),KC_A     , KC_S     , KC_D    , KC_F     , KC_G     ,            
     _______  ,  S(KC_1) , S(KC_2)  , S(KC_3) , S(KC_4)  , S(KC_5)  ,                                         S(KC_6)  , S(KC_7)  , S(KC_8)  , S(KC_9)  , S(KC_0)  , _______  ,
     _______  ,  _______ , _______ ,S(KC_LBRC),S(KC_RBRC),S(KC_BSLS),                                         KC_F6    , KC_F7    , KC_F8    , KC_F9    , KC_F10   , KC_F11   ,
     _______  ,  KC_F1   , KC_F2    , KC_F3   , KC_F4    , KC_F5    ,                                         S(KC_GRV),S(KC_QUOT),S(KC_INT1),S(KC_INT3), _______  , _______  ,
-                  _______  , KC_BTN2 , KC_BTN1  ,        G(KC_SPC) , _______  ,                   _______  , _______  , _______       , _______  , _______
+                  _______  , KC_BTN2 , KC_BTN1  ,         _______  , _______  ,                   _______  , _______  , _______       , _______  , _______
   ),
 
   [3] = LAYOUT_universal(
     MO(4)    , G(KC_1)  , G(KC_2)  , G(KC_3) , G(KC_4)  , G(KC_5)  ,                                         G(KC_6)  , G(KC_7)  , G(KC_8)  , G(KC_9)  , _______  , _______  ,
     _______  , _______  , _______  , _______ , _______  , _______  ,                                         KC_PGUP  , _______  , _______  ,KC_BRMU,KC_KB_VOLUME_UP, _______,
     _______  , _______  , _______  , _______ , _______  , _______  ,                                         KC_PGDN  , _______  , _______  ,KC_BRMD,KC_KB_VOLUME_DOWN,_______,
-                  _______  , _______ , _______  ,         KC_WH_L  , _______  ,                RALT(KC_GRV), KC_WH_R  , _______       , _______  , KC_KB_MUTE
+                  _______  , _______ , _______  ,         KC_WH_L  , _______  ,                   IME_TGL  , KC_WH_R  , _______       , _______  , KC_KB_MUTE
   ),
 
   [4] = LAYOUT_universal(
@@ -68,20 +72,20 @@ uint32_t os_detect_callback(uint32_t trigger_time, void *cb_arg) {
     keymap_config.raw = eeconfig_read_keymap();
 #endif
     switch (keyball.detected_host_os) {
-    case OS_WINDOWS:
+        case OS_WINDOWS:
 #if defined(MAGIC_KEYCODE_ENABLE) || defined(KEYBALL_KEEP_MAGIC_FUNCTIONS)
-        keymap_config.swap_lalt_lgui = true;
-        keymap_config.swap_ralt_rgui = false;
+            keymap_config.swap_lalt_lgui = true;
+            keymap_config.swap_ralt_rgui = false;
 #endif
-        break;
-    case OS_MACOS: {
-        uint8_t mode = KEYBALL_SCROLL_REVERSE_VERTICAL | KEYBALL_SCROLL_REVERSE_HORIZONTAL;
-        keyball_set_scroll_reverse_mode(mode);
+            break;
+        case OS_MACOS: {
+            uint8_t mode = KEYBALL_SCROLL_REVERSE_VERTICAL | KEYBALL_SCROLL_REVERSE_HORIZONTAL;
+            keyball_set_scroll_reverse_mode(mode);
 #if defined(MAGIC_KEYCODE_ENABLE) || defined(KEYBALL_KEEP_MAGIC_FUNCTIONS)
-        keymap_config.swap_lalt_lgui = false;
-        keymap_config.swap_ralt_rgui = true;
+            keymap_config.swap_lalt_lgui = false;
+            keymap_config.swap_ralt_rgui = true;
 #endif
-        break;
+            break;
     }
     default:
         break;
@@ -107,6 +111,37 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     keyball_set_scroll_mode(get_highest_layer(state) == 3);
     return state;
 }
+
+#if defined(OS_DETECTION_ENABLE) && defined(DEFERRED_EXEC_ENABLE)
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    uint8_t mod_state = get_mods();
+    switch (keycode) {
+        case IME_TGL:
+            switch (keyball.detected_host_os) {
+            case OS_WINDOWS:
+                if (record->event.pressed) {
+                    add_mods(MOD_BIT(KC_RALT));
+                    register_code(KC_GRV);
+                    set_mods(mod_state);
+                } else {
+                    unregister_code(KC_GRV);
+                }
+                return false;
+            case OS_MACOS:
+                if (record->event.pressed) {
+                    add_mods(MOD_BIT(KC_LGUI));
+                    register_code(KC_SPC);
+                    set_mods(mod_state);
+                } else {
+                    unregister_code(KC_SPC);
+                }
+                return false;
+            }
+            break;
+    }
+    return true;
+}
+#endif
 
 #ifdef OLED_ENABLE
 
