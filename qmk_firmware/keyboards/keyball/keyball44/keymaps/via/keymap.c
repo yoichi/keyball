@@ -114,7 +114,6 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 #if defined(OS_DETECTION_ENABLE) && defined(DEFERRED_EXEC_ENABLE)
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    uint8_t mod_state = get_mods();
     switch (keycode) {
         case IME_TGL:
             switch (keyball.detected_host_os) {
@@ -122,18 +121,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (record->event.pressed) {
                     add_mods(MOD_BIT(KC_RALT));
                     register_code(KC_GRV);
-                    set_mods(mod_state);
                 } else {
                     unregister_code(KC_GRV);
+                    del_mods(MOD_BIT(KC_RALT));
                 }
                 return false;
             case OS_MACOS:
                 if (record->event.pressed) {
                     add_mods(MOD_BIT(KC_LGUI));
                     register_code(KC_SPC);
-                    set_mods(mod_state);
                 } else {
                     unregister_code(KC_SPC);
+                    del_mods(MOD_BIT(KC_LGUI));
                 }
                 return false;
             }
