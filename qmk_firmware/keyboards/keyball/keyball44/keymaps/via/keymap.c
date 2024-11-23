@@ -130,9 +130,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (record->event.pressed) {
                     add_mods(MOD_BIT(KC_LGUI));
                     register_code(KC_SPC);
+                    del_mods(MOD_BIT(KC_LGUI));
                 } else {
                     unregister_code(KC_SPC);
-                    del_mods(MOD_BIT(KC_LGUI));
                 }
                 return false;
             }
