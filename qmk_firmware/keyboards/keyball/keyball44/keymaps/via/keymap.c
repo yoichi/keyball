@@ -29,8 +29,8 @@ enum custom_user_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // keymap for default (VIA)
   [0] = LAYOUT_universal(
- LT(2,KC_TAB), KC_Q     , KC_W     , KC_E    , KC_R     , KC_T     ,                                         KC_Y     , KC_U     , KC_I     , KC_O     , KC_P     , LT(1,KC_MINS),
-LCTL_T(KC_ESC),KC_A     , KC_S     , KC_D    , KC_F     , KC_G     ,                                         KC_H     , KC_J     , KC_K     , KC_L     , KC_SCLN  , RCTL_T(KC_EQL),
+ LT(2,KC_TAB), KC_Q     , KC_W     , KC_E    , KC_R     , KC_T     ,                                         KC_Y     , KC_U     , KC_I     , KC_O     , KC_P     , LT(1,KC_EQL),
+LCTL_T(KC_ESC),KC_A     , KC_S     , KC_D    , KC_F     , KC_G     ,                                         KC_H     , KC_J     , KC_K     , KC_L     , KC_SCLN  , RCTL_T(KC_MINS),
     KC_LSFT  , KC_Z     , KC_X     , KC_C    , KC_V     , KC_B     ,                                         KC_N     , KC_M     , KC_COMM  , KC_DOT   , KC_SLSH  , KC_RSFT  ,
                   KC_LALT  , KC_LGUI , KC_BTN1  ,    LT(1,KC_SPC)  , MO(3)    ,                   KC_BSPC,LT(2,KC_ENT), _______       , _______  , KC_RALT
   ),
@@ -38,7 +38,7 @@ LCTL_T(KC_ESC),KC_A     , KC_S     , KC_D    , KC_F     , KC_G     ,            
   [1] = LAYOUT_universal(
     _______  ,  KC_1    , KC_2     , KC_3    , KC_4     , KC_5     ,                                         KC_6     , KC_7     , KC_8     , KC_9     , KC_0     , _______  ,
     _______  ,S(KC_HOME), S(KC_END), KC_LBRC , KC_RBRC  , KC_BSLS  ,                                         KC_LEFT  , KC_DOWN  , KC_UP    , KC_RGHT  , KC_INS   , _______  ,
-    _______  ,RGUI(KC_1),RGUI(KC_2),RGUI(KC_3),RGUI(KC_4),KC_DEL   ,                                         KC_GRV   , KC_QUOT  , KC_INT1  , KC_INT3  , KC_CAPS  , _______  ,
+    _______  ,RWIN(KC_1),RWIN(KC_2),RWIN(KC_3),RWIN(KC_4),KC_DEL   ,                                         KC_GRV   , KC_QUOT  , KC_INT1  , KC_INT3  , KC_CAPS  , _______  ,
                   _______  , _______ , KC_HOME  ,         _______  , _______  ,                   _______  , KC_END   , _______       , _______  , _______
   ),
 
@@ -50,10 +50,10 @@ LCTL_T(KC_ESC),KC_A     , KC_S     , KC_D    , KC_F     , KC_G     ,            
   ),
 
   [3] = LAYOUT_universal(
-    MO(4)    , G(KC_1)  , G(KC_2)  , G(KC_3) , G(KC_4)  , G(KC_5)  ,                                         G(KC_6)  , G(KC_7)  , G(KC_8)  , G(KC_9)  , _______  , _______  ,
-    _______  , _______  , _______  , _______ , _______  , _______  ,                                         KC_PGUP  , _______  , _______  ,KC_BRMU,KC_KB_VOLUME_UP, _______,
-    _______  , _______  , _______  , _______ , _______  , _______  ,                                         KC_PGDN  , _______  , _______  ,KC_BRMD,KC_KB_VOLUME_DOWN,_______,
-                  _______  , _______ , _______  ,         KC_WH_L  , _______  ,                   IME_TGL  , KC_WH_R  , _______       , _______  , KC_KB_MUTE
+    MO(4)    , G(KC_1)  , G(KC_2)  , G(KC_3) , G(KC_4)  , G(KC_5)  ,                                         G(KC_6)  , G(KC_7)  , G(KC_8)  , G(KC_9)  , KC_BRMU  , KC_KB_VOLUME_UP,
+    _______  , _______  , _______  , _______ , _______  , KC_PGUP  ,                                         C(KC_LEFT),C(KC_DOWN),C(KC_UP) ,C(KC_RGHT), KC_BRMD  , KC_KB_VOLUME_DOWN,
+    _______  , _______  , _______  , _______ , _______  , KC_PGDN  ,                                 RWIN(KC_LEFT),RWIN(KC_DOWN),RWIN(KC_UP),RWIN(KC_RGHT),_______, KC_KB_MUTE,
+                  _______  , _______ , _______  ,         KC_WH_L  , _______  ,                   IME_TGL  , KC_WH_R  , _______       , _______  , _______
   ),
 
   [4] = LAYOUT_universal(
