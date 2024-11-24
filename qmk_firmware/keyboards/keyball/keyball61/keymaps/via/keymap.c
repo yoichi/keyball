@@ -21,6 +21,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "quantum.h"
 #include "os_detection.h"
 
+#define _LAYER_ _______ // should keep as transparent for momentarily layer activation
+
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_universal(
@@ -36,23 +38,23 @@ LCTL_T(KC_ESC),KC_A     , KC_S     , KC_D     , KC_F     , KC_G     ,           
     _______  , KC_1     , KC_2     , KC_3     , KC_4     , KC_5     ,                                  KC_6     , KC_7     , KC_8     , KC_9     , KC_0     , KC_F12   ,
     _______  , KC_GRV   , KC_QUOT  , KC_LBRC  , KC_RBRC  , KC_PSCR  ,                                  KC_LEFT  , KC_DOWN  , KC_UP    , KC_RGHT  , KC_INS   , _______  ,
     _______  , S(KC_GRV),S(KC_QUOT),S(KC_LBRC),S(KC_RBRC),A(KC_PSCR), KC_DEL   ,            KC_CAPS  , KC_MINS  ,S(KC_MINS), KC_EQL   , S(KC_EQL),S(KC_BSLS), _______  ,
-    _______  , _______  , _______  , _______  , KC_HOME  , _______  , _______  ,            _______  , KC_END   , _______  , _______  , _______  , _______  , _______
+    _LAYER_  , _______  , _______  , _______  , KC_HOME  , _LAYER_  , _______  ,            _______  , KC_END   , _______  , _______  , _______  , _______  , _LAYER_
   ),
 
   [2] = LAYOUT_universal(
     _______  , _______  , _______  , _______  , _______  , _______  ,                                  _______  , _______  , _______  , _______  , _______  , _______  ,
+    _LAYER_  , _______  , _______  , _______  , _______  , _______  ,                                  _______  , _______  , _______  , _______  , _______  , _______  ,
     _______  , _______  , _______  , _______  , _______  , _______  ,                                  _______  , _______  , _______  , _______  , _______  , _______  ,
-    _______  , _______  , _______  , _______  , _______  , _______  ,                                  _______  , _______  , _______  , _______  , _______  , _______  ,
-    _______  , _______  , _______  , _______  , _______  , _______  , _______  ,            _______  , _______  , _______  , _______  , _______  , _______  , _______  ,
-    _______  , _______  , _______  , KC_BTN2  , KC_BTN1  , _______  , _______  ,            _______  , _______  , _______  , _______  , _______  , _______  , _______
+    _______  , _______  , _______  , _______  , _______  , _______  , _LAYER_  ,            _______  , _______  , _______  , _______  , _______  , _______  , _______  ,
+    _______  , _______  , _______  , KC_BTN2  , KC_BTN1  , _______  , _______  ,            _______  , _LAYER_  , _______  , _______  , _______  , _______  , _______
   ),
 
   [3] = LAYOUT_universal(
     _______  , _______  , _______  , _______  , _______  , EE_CLR   ,                                  SSNP_FRE , SSNP_VRT , SSNP_HOR , SREV_VRT , SREV_HOR , _______  ,
-    _______  , _______  , _______  , _______  , _______  , _______  ,                                  _______  , _______  , _______  , _______  , _______  , _______  ,
+    _______  , _______  , _______  , _______  , _______  , _______  ,                                  _______  , _______  , _______  , _______  , _______  , _LAYER_  ,
     KBC_RST  , KBC_SAVE , CPI_D1K  , CPI_D100 , CPI_I100 , CPI_I1K  ,                                  KC_PGUP  , AG_RSWP  , AG_RNRM  ,KC_BRMU,KC_KB_VOLUME_UP, KC_INT1,
     _______  , _______  , SCRL_DVD , SCRL_DVI , SCRL_MO  , SCRL_TO  , _______  ,            _______  , KC_PGDN  , AG_LSWP  , AG_LNRM ,KC_BRMD,KC_KB_VOLUME_DOWN,KC_INT3,
-    _______  , _______  , _______  , _______  , _______  , KC_WH_L  , _______  ,         RALT(KC_GRV), KC_WH_R  , _______  , _______  , _______  ,KC_KB_MUTE, _______
+    _______  , _______  , _______  , _______  , _______  , KC_WH_L  , _LAYER_  ,         RALT(KC_GRV), KC_WH_R  , _______  , _______  , _______  ,KC_KB_MUTE, _______
   ),
 };
 // clang-format on

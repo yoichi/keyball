@@ -25,6 +25,8 @@ enum custom_user_keycodes {
     IME_TGL = QK_USER_0,
 };
 
+#define _LAYER_ _______ // should keep as transparent for momentarily layer activation
+
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // keymap for default (VIA)
@@ -36,28 +38,28 @@ LCTL_T(KC_ESC),KC_A     , KC_S     , KC_D    , KC_F     , KC_G     ,            
   ),
 
   [1] = LAYOUT_universal(
-    _______  ,  KC_1    , KC_2     , KC_3    , KC_4     , KC_5     ,                                         KC_6     , KC_7     , KC_8     , KC_9     , KC_0     , _______  ,
+    _______  ,  KC_1    , KC_2     , KC_3    , KC_4     , KC_5     ,                                         KC_6     , KC_7     , KC_8     , KC_9     , KC_0     , _LAYER_  ,
     _______  ,S(KC_HOME), S(KC_END), KC_LBRC , KC_RBRC  , KC_BSLS  ,                                         KC_LEFT  , KC_DOWN  , KC_UP    , KC_RGHT  , KC_INS   , _______  ,
     _______  ,RWIN(KC_1),RWIN(KC_2),RWIN(KC_3),RWIN(KC_4),KC_DEL   ,                                         KC_GRV   , KC_QUOT  , KC_INT1  , KC_INT3  , KC_CAPS  , _______  ,
-                  _______  , _______ , KC_HOME  ,         _______  , _______  ,                   _______  , KC_END   , _______       , _______  , _______
+                  _______  , _______ , KC_HOME  ,         _LAYER_  , _______  ,                   _______  , KC_END   , _______       , _______  , _______
   ),
 
   [2] = LAYOUT_universal(
-    _______  ,  S(KC_1) , S(KC_2)  , S(KC_3) , S(KC_4)  , S(KC_5)  ,                                         S(KC_6)  , S(KC_7)  , S(KC_8)  , S(KC_9)  , S(KC_0)  , _______  ,
+    _LAYER_  ,  S(KC_1) , S(KC_2)  , S(KC_3) , S(KC_4)  , S(KC_5)  ,                                         S(KC_6)  , S(KC_7)  , S(KC_8)  , S(KC_9)  , S(KC_0)  , _______  ,
     _______  ,  _______ , _______ ,S(KC_LBRC),S(KC_RBRC),S(KC_BSLS),                                         KC_F6    , KC_F7    , KC_F8    , KC_F9    , KC_F10   , KC_F11   ,
     _______  ,  KC_F1   , KC_F2    , KC_F3   , KC_F4    , KC_F5    ,                                         S(KC_GRV),S(KC_QUOT),S(KC_INT1),S(KC_INT3), _______  , _______  ,
-                  _______  , KC_BTN2 , KC_BTN1  ,         _______  , _______  ,                   _______  , _______  , _______       , _______  , _______
+                  _______  , KC_BTN2 , KC_BTN1  ,         _______  , _______  ,                   _______  , _LAYER_  , _______       , _______  , _______
   ),
 
   [3] = LAYOUT_universal(
     MO(4)    , G(KC_1)  , G(KC_2)  , G(KC_3) , G(KC_4)  , G(KC_5)  ,                                         G(KC_6)  , G(KC_7)  , G(KC_8)  , G(KC_9)  , KC_BRMU  , KC_KB_VOLUME_UP,
     _______  , _______  , _______  , _______ , _______  , KC_PGUP  ,                                         C(KC_LEFT),C(KC_DOWN),C(KC_UP) ,C(KC_RGHT), KC_BRMD  , KC_KB_VOLUME_DOWN,
     _______  , _______  , _______  , _______ , _______  , KC_PGDN  ,                                 RWIN(KC_LEFT),RWIN(KC_DOWN),RWIN(KC_UP),RWIN(KC_RGHT),_______, KC_KB_MUTE,
-                  _______  , _______ , _______  ,         KC_WH_L  , _______  ,                   IME_TGL  , KC_WH_R  , _______       , _______  , _______
+                  _______  , _______ , _______  ,         KC_WH_L  , _LAYER_  ,                   IME_TGL  , KC_WH_R  , _______       , _______  , _______
   ),
 
   [4] = LAYOUT_universal(
-    _______  , _______  , _______  , _______ , _______  , EE_CLR   ,                                         SSNP_FRE , SSNP_VRT , SSNP_HOR , SREV_VRT , SREV_HOR , _______  ,
+    _LAYER_  , _______  , _______  , _______ , _______  , EE_CLR   ,                                         SSNP_FRE , SSNP_VRT , SSNP_HOR , SREV_VRT , SREV_HOR , _______  ,
     KBC_RST  , KBC_SAVE , CPI_D1K  , CPI_D100, CPI_I100 , CPI_I1K  ,                                         _______  , AG_RSWP  , AG_RNRM  , _______  , _______  , _______  ,
     _______  , _______  , SCRL_DVD , SCRL_DVI, _______  , _______  ,                                         _______  , AG_LSWP  , AG_LNRM  , _______  , _______  , _______  ,
                   _______  , _______ , _______  ,         _______  , _______  ,                   _______  , _______  , _______       , _______  , _______
