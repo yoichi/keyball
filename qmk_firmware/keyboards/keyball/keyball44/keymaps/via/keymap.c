@@ -121,20 +121,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             switch (keyball.detected_host_os) {
             case OS_WINDOWS:
                 if (record->event.pressed) {
-                    add_mods(MOD_BIT(KC_RALT));
-                    register_code(KC_GRV);
+                    register_code16(RALT(KC_GRV));
                 } else {
-                    unregister_code(KC_GRV);
-                    del_mods(MOD_BIT(KC_RALT));
+                    unregister_code16(RALT(KC_GRV));
                 }
                 return false;
             case OS_MACOS:
                 if (record->event.pressed) {
-                    add_mods(MOD_BIT(KC_LGUI));
-                    register_code(KC_SPC);
-                    del_mods(MOD_BIT(KC_LGUI));
+                    register_code16(G(KC_SPC));
                 } else {
-                    unregister_code(KC_SPC);
+                    unregister_code16(G(KC_SPC));
                 }
                 return false;
             }
