@@ -21,12 +21,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "quantum.h"
 #include "os_detection.h"
 
+enum custom_user_keycodes {
+    IME_TGL = QK_USER_0,
+};
+
 #define _LAYER_ _______ // should keep as transparent for momentarily layer activation
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_universal(
-    G(KC_SPC), KC_1     , KC_2     , KC_3     , KC_4     , KC_5     ,                                  KC_6     , KC_7     , KC_8     , KC_9     , KC_0     , KC_BSLS  ,
+    KC_ESC   , KC_1     , KC_2     , KC_3     , KC_4     , KC_5     ,                                  KC_6     , KC_7     , KC_8     , KC_9     , KC_0     , KC_BSLS  ,
  LT(2,KC_TAB), KC_Q     , KC_W     , KC_E     , KC_R     , KC_T     ,                                  KC_Y     , KC_U     , KC_I     , KC_O     , KC_P     , LT(3,KC_EQL),
 LCTL_T(KC_ESC),KC_A     , KC_S     , KC_D     , KC_F     , KC_G     ,                                  KC_H     , KC_J     , KC_K     , KC_L     , KC_SCLN  , RCTL_T(KC_MINS),
     KC_LSFT  , KC_Z     , KC_X     , KC_C     , KC_V     , KC_B     ,LT(2,KC_QUOT),         KC_GRV   , KC_N     , KC_M     , KC_COMM  , KC_DOT   , KC_SLSH  , KC_RSFT  ,
@@ -54,7 +58,7 @@ LCTL_T(KC_ESC),KC_A     , KC_S     , KC_D     , KC_F     , KC_G     ,           
     _______  , _______  , _______  , _______  , _______  , _______  ,                                  _______  , _______  , _______  , _______  , _______  , _LAYER_  ,
     KBC_RST  , KBC_SAVE , CPI_D1K  , CPI_D100 , CPI_I100 , CPI_I1K  ,                                  KC_PGUP  , AG_RSWP  , AG_RNRM  ,KC_BRMU,KC_KB_VOLUME_UP, KC_INT1,
     _______  , _______  , SCRL_DVD , SCRL_DVI , SCRL_MO  , SCRL_TO  , _______  ,            _______  , KC_PGDN  , AG_LSWP  , AG_LNRM ,KC_BRMD,KC_KB_VOLUME_DOWN,KC_INT3,
-    _______  , _______  , _______  , _______  , _______  , KC_WH_L  , _LAYER_  ,         RALT(KC_GRV), KC_WH_R  , _______  , _______  , _______  ,KC_KB_MUTE, _______
+    _______  , _______  , _______  , _______  , _______  , KC_WH_L  , _LAYER_  ,            IME_TGL  , KC_WH_R  , _______  , _______  , _______  ,KC_KB_MUTE, _______
   ),
 };
 // clang-format on
@@ -105,6 +109,32 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     keyball_set_scroll_mode(get_highest_layer(state) == 3);
     return state;
 }
+
+#if defined(OS_DETECTION_ENABLE) && defined(DEFERRED_EXEC_ENABLE)
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case IME_TGL:
+            switch (keyball.detected_host_os) {
+            case OS_WINDOWS:
+                if (record->event.pressed) {
+                    register_code16(RALT(KC_GRV));
+                } else {
+                    unregister_code16(RALT(KC_GRV));
+                }
+                return false;
+            case OS_MACOS:
+                if (record->event.pressed) {
+                    register_code16(G(KC_SPC));
+                } else {
+                    unregister_code16(G(KC_SPC));
+                }
+                return false;
+            }
+            break;
+    }
+    return true;
+}
+#endif
 
 #ifdef OLED_ENABLE
 
