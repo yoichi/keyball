@@ -31,7 +31,7 @@ enum custom_user_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_universal(
     KC_ESC   , KC_1     , KC_2     , KC_3     , KC_4     , KC_5     ,                                  KC_6     , KC_7     , KC_8     , KC_9     , KC_0     , KC_BSLS  ,
- LT(2,KC_TAB), KC_Q     , KC_W     , KC_E     , KC_R     , KC_T     ,                                  KC_Y     , KC_U     , KC_I     , KC_O     , KC_P     , LT(3,KC_EQL),
+ LT(2,KC_TAB), KC_Q     , KC_W     , KC_E     , KC_R     , KC_T     ,                                  KC_Y     , KC_U     , KC_I     , KC_O     , KC_P     , LT(2,KC_EQL),
 LCTL_T(KC_ESC),KC_A     , KC_S     , KC_D     , KC_F     , KC_G     ,                                  KC_H     , KC_J     , KC_K     , KC_L     , KC_SCLN  , RCTL_T(KC_MINS),
     KC_LSFT  , KC_Z     , KC_X     , KC_C     , KC_V     , KC_B     ,LT(2,KC_GRV),          KC_QUOT  , KC_N     , KC_M     , KC_COMM  , KC_DOT   , KC_SLSH  , KC_RSFT  ,
     MO(1)    , KC_LCTL  , KC_LALT  , KC_LGUI  , KC_BTN1,LT(1,KC_SPC), MO(3)    ,            KC_BSPC,LT(2,KC_ENT), _______  , _______  , _______  , KC_RALT  , MO(1)
@@ -47,18 +47,26 @@ LCTL_T(KC_ESC),KC_A     , KC_S     , KC_D     , KC_F     , KC_G     ,           
 
   [2] = LAYOUT_universal(
     _______  , _______  , _______  , _______  , _______  , _______  ,                                  _______  , _______  , _______  , _______  , _______  , _______  ,
-    _LAYER_  , S(KC_1)  , S(KC_2)  , S(KC_3)  , S(KC_4)  , S(KC_5)  ,                                  S(KC_6)  , S(KC_7)  , S(KC_8)  , S(KC_9)  , S(KC_0)  , _______  ,
+    _LAYER_  , S(KC_1)  , S(KC_2)  , S(KC_3)  , S(KC_4)  , S(KC_5)  ,                                  S(KC_6)  , S(KC_7)  , S(KC_8)  , S(KC_9)  , S(KC_0)  , _LAYER_  ,
     _______  ,S(KC_INT1),S(KC_INT3), S(KC_GRV),S(KC_LBRC),S(KC_RBRC),                        RWIN(KC_LEFT),RWIN(KC_DOWN),RWIN(KC_UP),RWIN(KC_RGHT),_______  , _______  ,
     _______  , _______  , _______  , _______  , _______  , _______  , _LAYER_  ,            _______  ,S(KC_QUOT),S(KC_BSLS), _______  , _______  , _______  , _______  ,
     _______  , _______  , _______  , KC_BTN2  , KC_BTN1  , _______  , _______  ,            _______  , _LAYER_  , _______  , _______  , _______  , _______  , _______
   ),
 
   [3] = LAYOUT_universal(
-    _______  , _______  , _______  , _______  , _______  , EE_CLR   ,                                  SSNP_FRE , SSNP_VRT , SSNP_HOR , SREV_VRT , SREV_HOR , _______  ,
-    _______  , _______  , _______  , _______  , _______  , _______  ,                                  _______  , _______  , _______  , _______  , _______  , _LAYER_  ,
-    KBC_RST  , KBC_SAVE , CPI_D1K  , CPI_D100 , CPI_I100 , CPI_I1K  ,                                  KC_PGUP  , AG_RSWP  , AG_RNRM  ,KC_BRMU,KC_KB_VOLUME_UP, KC_INT1,
-    _______  , _______  , SCRL_DVD , SCRL_DVI , SCRL_MO  , SCRL_TO  , _______  ,            _______  , KC_PGDN  , AG_LSWP  , AG_LNRM ,KC_BRMD,KC_KB_VOLUME_DOWN,KC_INT3,
-    _______  , _______  , _______  , _______  , _______  , KC_WH_L  , _LAYER_  ,            IME_TGL  , KC_WH_R  , _______  , _______  , _______  ,KC_KB_MUTE, _______
+    MO(4)    , _______  , _______  , _______  , _______  , _______  ,                                  _______  , _______  , _______  , _______  , _______  , _______  ,
+    _______  , _______  , _______  , _______  , _______  , _______  ,                                  _______  , _______  , _______  , _______  ,KC_BRMU,KC_KB_VOLUME_UP,
+    _______  , _______  , _______  , _______  , _______  , KC_PGUP  ,                                 C(KC_LEFT),C(KC_DOWN), C(KC_UP) ,C(KC_RGHT),KC_BRMD,KC_KB_VOLUME_DOWN,
+    _______  , _______  , _______  , _______  , _______  , KC_PGDN  , _______  ,            _______  , _______  , _______  , _______  , _______  , _______  ,KC_KB_MUTE,
+    _______  , _______  , _______  , _______  , _______  , KC_WH_L  , _LAYER_  ,            IME_TGL  , KC_WH_R  , _______  , _______  , _______  , _______  , _______
+  ),
+
+  [4] = LAYOUT_universal(
+    _LAYER_  , _______  , _______  , _______  , _______  , EE_CLR   ,                                  SSNP_FRE , SSNP_VRT , SSNP_HOR , SREV_VRT , SREV_HOR , _______  ,
+    _______  , _______  , _______  , _______  , _______  , _______  ,                                  _______  , _______  , _______  , _______  , _______  , _______  ,
+    KBC_RST  , KBC_SAVE , CPI_D1K  , CPI_D100 , CPI_I100 , CPI_I1K  ,                                  _______  , AG_RSWP  , AG_RNRM  , _______  , _______  , _______  ,
+    _______  , _______  , SCRL_DVD , SCRL_DVI , SCRL_MO  , SCRL_TO  , _______  ,            _______  , _______  , AG_LSWP  , AG_LNRM  , _______  , _______  , _______  ,
+    _______  , _______  , _______  , _______  , _______  , _______  , _______  ,            _______  , _______  , _______  , _______  , _______  , _______  , _______
   ),
 };
 // clang-format on

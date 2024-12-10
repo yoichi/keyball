@@ -45,3 +45,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef MAGIC_KEYCODE_ENABLE
 #define KEYBALL_KEEP_MAGIC_FUNCTIONS
 #endif
+
+#define DYNAMIC_KEYMAP_LAYER_COUNT 5
