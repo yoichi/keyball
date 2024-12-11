@@ -56,7 +56,7 @@ LCTL_T(KC_ESC),KC_A     , KC_S     , KC_D     , KC_F     , KC_G     ,           
   [3] = LAYOUT_universal(
     MO(4)    , _______  , _______  , _______  , _______  , _______  ,                                  _______  , _______  , _______  , _______  , _______  , _______  ,
     _______  , _______  , _______  , _______  , _______  , _______  ,                                  _______  , _______  , _______  , _______  ,KC_BRMU,KC_KB_VOLUME_UP,
-    _______  , _______  , _______  , _______  , _______  , KC_PGUP  ,                                 C(KC_LEFT),C(KC_DOWN), C(KC_UP) ,C(KC_RGHT),KC_BRMD,KC_KB_VOLUME_DOWN,
+    _______  ,S(KC_LEFT),S(KC_DOWN), S(KC_UP) ,S(KC_RGHT), KC_PGUP  ,                                 C(KC_LEFT),C(KC_DOWN), C(KC_UP) ,C(KC_RGHT),KC_BRMD,KC_KB_VOLUME_DOWN,
     _______  , _______  , _______  , _______  , _______  , KC_PGDN  , _______  ,            _______  , _______  , _______  , _______  , _______  , _______  ,KC_KB_MUTE,
     _______  , _______  , _______  , _______  , _______  , KC_WH_L  , _LAYER_  ,            IME_TGL  , KC_WH_R  , _______  , _______  , _______  , _______  , _______
   ),
