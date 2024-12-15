@@ -13,5 +13,7 @@ DEFERRED_EXEC_ENABLE = yes
 # Enabled for QK_MAGIC_*
 MAGIC_ENABLE = yes
 
+#COMBO_ENABLE = yes
+
 # for debug
 #CONSOLE_ENABLE = yes

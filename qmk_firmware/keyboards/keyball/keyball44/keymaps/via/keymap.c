@@ -140,6 +140,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 #endif
 
+#ifdef COMBO_ENABLE
+const uint16_t PROGMEM combo_btn1[] = {KC_J, KC_K, COMBO_END};
+const uint16_t PROGMEM combo_btn2[] = {KC_K, KC_L, COMBO_END};
+const uint16_t PROGMEM combo_btn3[] = {KC_J, KC_L, COMBO_END};
+
+combo_t key_combos[] = {
+    COMBO(combo_btn1, KC_BTN1),
+    COMBO(combo_btn2, KC_BTN2),
+    COMBO(combo_btn3, KC_BTN3),
+};
+#endif
+
 #ifdef OLED_ENABLE
 
 #    include "lib/oledkit/oledkit.h"
