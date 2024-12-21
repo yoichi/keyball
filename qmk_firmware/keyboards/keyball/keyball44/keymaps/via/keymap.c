@@ -114,9 +114,9 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     return state;
 }
 
-#if defined(OS_DETECTION_ENABLE) && defined(DEFERRED_EXEC_ENABLE)
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
+#if defined(OS_DETECTION_ENABLE) && defined(DEFERRED_EXEC_ENABLE)
         case IME_TGL:
             switch (keyball.detected_host_os) {
             case OS_WINDOWS:
@@ -135,10 +135,43 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             }
             break;
+#endif
+        case KC_BSPC:
+            // https://docs.qmk.fm/feature_advanced_keycodes#shift-backspace-for-delete
+            {
+                // Initialize a boolean variable that keeps track
+                // of the delete key status: registered or not?
+                static bool delkey_registered;
+                uint8_t mod_state = get_mods();
+                if (record->event.pressed) {
+                    // Detect the activation of either shift keys
+                    if (mod_state & MOD_MASK_SHIFT) {
+                        // First temporarily canceling both shifts so that
+                        // shift isn't applied to the KC_DEL keycode
+                        del_mods(MOD_MASK_SHIFT);
+                        register_code(KC_DEL);
+                        // Update the boolean variable to reflect the status of KC_DEL
+                        delkey_registered = true;
+                        // Reapplying modifier state so that the held shift key(s)
+                        // still work even after having tapped the Backspace/Delete key.
+                        set_mods(mod_state);
+                        return false;
+                    }
+                } else { // on release of KC_BSPC
+                    // In case KC_DEL is still being sent even after the release of KC_BSPC
+                    if (delkey_registered) {
+                        unregister_code(KC_DEL);
+                        delkey_registered = false;
+                        return false;
+                    }
+                }
+            }
+            break;
+        default:
+            break;
     }
     return true;
 }
-#endif
 
 #ifdef COMBO_ENABLE
 const uint16_t PROGMEM combo_btn1[] = {KC_J, KC_K, COMBO_END};
