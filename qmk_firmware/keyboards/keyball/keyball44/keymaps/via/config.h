@@ -33,6 +33,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#    define RGBLIGHT_EFFECT_TWINKLE
 #endif
 
+#ifdef OLED_ENABLE
+#define OLED_TIMEOUT 30000
+#endif
+
 #define TAP_CODE_DELAY 5
 
 #define TAPPING_TERM 180
