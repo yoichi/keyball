@@ -41,7 +41,7 @@ LCTL_T(KC_ESC),KC_A     , KC_S     , KC_D    , KC_F     , KC_G     ,            
     _______  , KC_1     , KC_2     , KC_3    , KC_4     , KC_5     ,                                         KC_6     , KC_7     , KC_8     , KC_9     , KC_0     , _LAYER_  ,
     _______  , KC_INT1  , KC_INT3  , KC_GRV  , KC_LBRC  , KC_RBRC  ,                                         KC_LEFT  , KC_DOWN  , KC_UP    , KC_RGHT  , KC_INS   , _______  ,
     _______  ,S(KC_HOME), S(KC_END), KC_HOME , KC_END   , KC_DEL   ,                                         KC_QUOT  , KC_BSLS  , _______  , _______  , KC_CAPS  , _______  ,
-                  _______  , _______ , _______  ,         _LAYER_  , _______  ,                   _______  , _______  , _______       , _______  , _______
+                  _______  , _______ , KC_HOME  ,         _LAYER_  , KC_END   ,                   _______  , _______  , _______       , _______  , _______
   ),
 
   [2] = LAYOUT_universal(
