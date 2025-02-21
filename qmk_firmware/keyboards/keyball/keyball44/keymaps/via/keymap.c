@@ -121,9 +121,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             switch (keyball.detected_host_os) {
             case OS_WINDOWS:
                 if (record->event.pressed) {
-                    register_code16(RALT(KC_GRV));
-                } else {
-                    unregister_code16(RALT(KC_GRV));
+                    register_code16(KC_RALT);
+                    wait_ms(TAP_CODE_DELAY);
+                    tap_code16(KC_GRV);
+                    unregister_code16(KC_RALT);
                 }
                 return false;
             case OS_MACOS:
