@@ -4,6 +4,9 @@ OLED_ENABLE = yes
 
 VIA_ENABLE = yes
 
+# Enabled for KC_VOL[UD] and KC_MUTE
+EXTRAKEY_ENABLE = yes
+
 # Enabled for KC_MS_WH_*
 MOUSEKEY_ENABLE = yes
 
