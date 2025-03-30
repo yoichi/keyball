@@ -88,9 +88,9 @@ uint32_t os_detect_callback(uint32_t trigger_time, void *cb_arg) {
             keymap_config.swap_ralt_rgui = true;
 #endif
             break;
-    }
-    default:
-        break;
+        }
+        default:
+            break;
     }
 #if defined(MAGIC_KEYCODE_ENABLE) || defined(KEYBALL_KEEP_MAGIC_FUNCTIONS)
     eeconfig_update_keymap(keymap_config.raw);
@@ -122,7 +122,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             case OS_WINDOWS:
                 if (record->event.pressed) {
                     register_code16(KC_RALT);
-                    wait_ms(TAP_CODE_DELAY);
+                    wait_ms(10);
                     tap_code16(KC_GRV);
                     unregister_code16(KC_RALT);
                 }
