@@ -46,6 +46,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define AUTO_MOUSE_DEFAULT_LAYER 2
 #endif
 
+#define SCROLLSNAP_HORIZONTAL_SCROLL_BY_VERTICAL_MOTION
+
 #ifndef MAGIC_KEYCODE_ENABLE
 #define KEYBALL_KEEP_MAGIC_FUNCTIONS
 #endif
