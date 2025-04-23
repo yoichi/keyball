@@ -142,9 +142,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             case OS_MACOS:
                 if (record->event.pressed) {
-                    register_code16(G(KC_SPC));
-                } else {
-                    unregister_code16(G(KC_SPC));
+                    register_code16(KC_LGUI);
+                    wait_ms(10);
+                    tap_code16(KC_SPC);
+                    unregister_code16(KC_LGUI);
                 }
                 return false;
             }
