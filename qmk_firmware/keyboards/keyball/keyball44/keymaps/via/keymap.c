@@ -61,7 +61,7 @@ LCTL_T(KC_ESC),KC_A     , KC_S     , KC_D    , KC_F     , KC_G     ,            
   [4] = LAYOUT_universal(
     _LAYER_  , _______  , _______  , _______ , _______  , EE_CLR   ,                                         SSNP_FRE , SSNP_VRT , SSNP_HOR , SREV_VRT , SREV_HOR , _______  ,
     KBC_RST  , KBC_SAVE , CPI_D1K  , CPI_D100, CPI_I100 , CPI_I1K  ,                                         _______  , AG_RSWP  , AG_RNRM  , _______  , _______  , _______  ,
-    _______  , _______  , SCRL_DVD , SCRL_DVI, _______  , _______  ,                                         _______  , AG_LSWP  , AG_LNRM  , _______  , _______  , _______  ,
+    QK_BOOT  , _______  , SCRL_DVD , SCRL_DVI, _______  , _______  ,                                         _______  , AG_LSWP  , AG_LNRM  , _______  , _______  , _______  ,
                   _______  , _______ , _______  ,         _______  , _______  ,                   _______  , _______  , _______       , _______  , _______
   ),
 };
