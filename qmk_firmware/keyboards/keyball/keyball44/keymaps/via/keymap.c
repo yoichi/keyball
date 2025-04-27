@@ -38,16 +38,16 @@ LCTL_T(KC_ESC),KC_A     , KC_S     , KC_D    , KC_F     , KC_G     ,            
   ),
 
   [1] = LAYOUT_universal(
-    _______  , KC_1     , KC_2     , KC_3    , KC_4     , KC_5     ,                                         KC_6     , KC_7     , KC_8     , KC_9     , KC_0     , _LAYER_  ,
+    KC_QUOT  , KC_1     , KC_2     , KC_3    , KC_4     , KC_5     ,                                         KC_6     , KC_7     , KC_8     , KC_9     , KC_0     , KC_BSLS  ,
     _______  , KC_INT1  , KC_INT3  , KC_GRV  , KC_LBRC  , KC_RBRC  ,                                         KC_LEFT  , KC_DOWN  , KC_UP    , KC_RGHT  , KC_INS   , _______  ,
-    _______  , _______  , _______  ,S(KC_HOME),S(KC_END), KC_DEL   ,                                         KC_QUOT  , KC_BSLS  , _______  , _______  , KC_CAPS  , _______  ,
+    _______  , _______  , _______  ,S(KC_HOME),S(KC_END), KC_DEL   ,                                         _______  , _______  , _______  , _______  , KC_CAPS  , _______  ,
                   _______  , _______ , KC_HOME  ,         _LAYER_  , KC_END   ,                   _______  , _______  , _______       , _______  , _______
   ),
 
   [2] = LAYOUT_universal(
-    _LAYER_  , S(KC_1)  , S(KC_2)  , S(KC_3) , S(KC_4)  , S(KC_5)  ,                                         S(KC_6)  , S(KC_7)  , S(KC_8)  , S(KC_9)  , S(KC_0)  , _______  ,
+   S(KC_QUOT), S(KC_1)  , S(KC_2)  , S(KC_3) , S(KC_4)  , S(KC_5)  ,                                         S(KC_6)  , S(KC_7)  , S(KC_8)  , S(KC_9)  , S(KC_0)  ,S(KC_BSLS),
     _______  ,S(KC_INT1),S(KC_INT3),S(KC_GRV),S(KC_LBRC),S(KC_RBRC),                                         KC_F6    , KC_F7    , KC_F8    , KC_F9    , KC_F10   , KC_F11   ,
-    _______  , KC_F1    , KC_F2    , KC_F3   , KC_F4    , KC_F5    ,                                         S(KC_QUOT),S(KC_BSLS),_______  , _______  , _______  , _______  ,
+    _______  , KC_F1    , KC_F2    , KC_F3   , KC_F4    , KC_F5    ,                                         _______  , _______  ,_______  , _______  , _______  , _______  ,
                   _______  , KC_BTN2 , KC_BTN1  ,        S(KC_HOME), S(KC_END),                   _______  , _LAYER_  , _______       , _______  , _______
   ),
 
