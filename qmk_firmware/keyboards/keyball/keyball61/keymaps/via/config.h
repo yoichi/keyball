@@ -53,3 +53,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #endif
 
 #define DYNAMIC_KEYMAP_LAYER_COUNT 5
+
+// On my Keyball61, large absolute values of d->x and d->y appeared unexpectedly
+// in pmw3360_motion_burst() and it causes the mouse pointer to jump.
+// It is caused by movements with large SQUAL, so ignoring them to prevent jump.
+// (although some normal values are also ignored)
+#define PMW3360_MOTION_SQUAL_MAX 150
