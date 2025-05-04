@@ -58,4 +58,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // in pmw3360_motion_burst() and it causes the mouse pointer to jump.
 // It is caused by movements with large SQUAL, so ignoring them to prevent jump.
 // (although some normal values are also ignored)
-#define PMW3360_MOTION_SQUAL_MAX 150
+#define PMW3360_MOTION_SQUAL_MAX 100
