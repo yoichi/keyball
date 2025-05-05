@@ -117,16 +117,22 @@ bool pmw3360_motion_burst(pmw3360_motion_t *d) {
     pmw3360_spi_start();
     spi_write(pmw3360_Motion_Burst);
     wait_us(35);
-    spi_read(); // skip MOT
-    spi_read(); // skip Observation
-    d->x = spi_read();
-    d->x |= spi_read() << 8;
-    d->y = spi_read();
-    d->y |= spi_read() << 8;
+    uint8_t mot = spi_read();
+    uint8_t observation = spi_read();
+    bool moved = mot & 0x80 && observation <= 0x3f;
+    if (moved) {
+        d->x = spi_read();
+        d->x |= spi_read() << 8;
+        d->y = spi_read();
+        d->y |= spi_read() << 8;
+#if defined(CONSOLE_ENABLE)
+        //dprintf("pmw3360_motion_burst: mot:%d, observation:%d, dx:%d, dy:%d\n", mot, observation, d->x, d->y);
+#endif
+    }
     spi_stop();
     // Required NCS in 500ns after motion burst.
     wait_us(1);
-    return true;
+    return moved;
 }
 
 bool pmw3360_init(void) {
