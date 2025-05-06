@@ -119,7 +119,15 @@ bool pmw3360_motion_burst(pmw3360_motion_t *d) {
     wait_us(35);
     uint8_t mot = spi_read();
     uint8_t observation = spi_read();
-    bool moved = mot & 0x80 && observation <= 0x3f;
+    // Ignore result when corrupted observation value is detected,
+    // so as not to use corrupted value of d->x and d->y.
+    // (corruption occurred on my Keyball61)
+#ifdef KEYBALL_PMW3360_UPLOAD_SROM_ID
+#define OBSERVATION_MAX 0x7f
+#else
+#define OBSERVATION_MAX 0x3f
+#endif
+    bool moved = mot & 0x80 && observation <= OBSERVATION_MAX;
     if (moved) {
         d->x = spi_read();
         d->x |= spi_read() << 8;
