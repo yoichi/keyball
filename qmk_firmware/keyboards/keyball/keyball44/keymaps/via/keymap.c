@@ -55,14 +55,14 @@ LCTL_T(KC_ESC),KC_A     , KC_S     , KC_D    , KC_F     , KC_G     ,            
     MO(4)    , G(KC_1)  , G(KC_2)  , G(KC_3) , G(KC_4)  , G(KC_5)  ,                                         G(KC_6)  , G(KC_7)  , G(KC_8)  , G(KC_9)  , KC_BRMU  , KC_VOLU  ,
     _______  ,S(KC_LEFT),S(KC_DOWN), S(KC_UP),S(KC_RGHT), KC_PGUP  ,                                         C(KC_LEFT),C(KC_DOWN),C(KC_UP) ,C(KC_RGHT), KC_BRMD  , KC_VOLD  ,
     _______  ,RWIN(KC_1),RWIN(KC_2),RWIN(KC_3),RWIN(KC_4),KC_PGDN  ,                                 RWIN(KC_LEFT),RWIN(KC_DOWN),RWIN(KC_UP),RWIN(KC_RGHT),_______, KC_MUTE  ,
-                  _______  , _______ , _______  ,         KC_WH_L  , _LAYER_  ,                   IME_TGL  , KC_WH_R  , _______       , _______  , _______
+                  _______  , _______ , _______  ,         _______  , _LAYER_  ,                   IME_TGL  , _______  , _______       , _______  , _______
   ),
 
   [4] = LAYOUT_universal(
     _LAYER_  , _______  , _______  , _______ , _______  , EE_CLR   ,                                         SSNP_FRE , SSNP_VRT , SSNP_HOR , SREV_VRT , SREV_HOR , _______  ,
     KBC_RST  , KBC_SAVE , CPI_D1K  , CPI_D100, CPI_I100 , CPI_I1K  ,                                         _______  , AG_RSWP  , AG_RNRM  , _______  , _______  , _______  ,
     QK_BOOT  , _______  , SCRL_DVD , SCRL_DVI, _______  , _______  ,                                         _______  , AG_LSWP  , AG_LNRM  , _______  , _______  , _______  ,
-                  _______  , _______ , _______  ,         _______  , _______  ,                   _______  , _______  , _______       , _______  , _______
+                  _______  , _______ , _______  ,         _______  , _______  , QK_KEY_OVERRIDE_ON,QK_KEY_OVERRIDE_OFF, _______       , _______  , _______
   ),
 };
 // clang-format on
@@ -79,6 +79,9 @@ uint32_t os_detect_callback(uint32_t trigger_time, void *cb_arg) {
             keymap_config.swap_lalt_lgui = true;
             keymap_config.swap_ralt_rgui = false;
 #endif
+#ifdef KEY_OVERRIDE_ENABLE
+            key_override_on();
+#endif
             break;
         case OS_MACOS: {
             uint8_t mode = KEYBALL_SCROLL_REVERSE_VERTICAL | KEYBALL_SCROLL_REVERSE_HORIZONTAL;
@@ -86,6 +89,9 @@ uint32_t os_detect_callback(uint32_t trigger_time, void *cb_arg) {
 #if defined(MAGIC_KEYCODE_ENABLE) || defined(KEYBALL_KEEP_MAGIC_FUNCTIONS)
             keymap_config.swap_lalt_lgui = false;
             keymap_config.swap_ralt_rgui = true;
+#endif
+#ifdef KEY_OVERRIDE_ENABLE
+            key_override_off();
 #endif
             break;
         }
@@ -127,6 +133,64 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     return state;
 }
 
+#ifdef KEY_OVERRIDE_ENABLE
+#include "process_key_override.h"
+#include "keymap_extras/keymap_japanese.h"
+const key_override_t **key_overrides = (const key_override_t *[]){
+    &ko_make_basic(MOD_MASK_SHIFT, KC_2, JP_AT), // @
+    &ko_make_basic(0, S(KC_2), JP_AT), // @
+
+    &ko_make_basic(MOD_MASK_SHIFT, KC_6, JP_CIRC), // ^
+    &ko_make_basic(0, S(KC_6), JP_CIRC), // ^
+
+    &ko_make_basic(MOD_MASK_SHIFT, KC_7, JP_AMPR), // &
+    &ko_make_basic(0, S(KC_7), JP_AMPR), // &
+
+    &ko_make_basic(MOD_MASK_SHIFT, KC_8, JP_ASTR), // *
+    &ko_make_basic(0, S(KC_8), JP_ASTR), // *
+
+    &ko_make_basic(MOD_MASK_SHIFT, KC_9, JP_LPRN), // (
+    &ko_make_basic(0, S(KC_9), JP_LPRN), // (
+
+    &ko_make_basic(MOD_MASK_SHIFT, KC_0, JP_RPRN), // )
+    &ko_make_basic(0, S(KC_0), JP_RPRN), // )
+
+    &ko_make_basic(MOD_MASK_SHIFT, KC_SCLN, JP_COLN), // :
+    &ko_make_basic(0, S(KC_SCLN), JP_COLN), // :
+
+    // we can apply overrides but loose LT(layer,) effect
+    &ko_make_with_layers_and_negmods(0, LT(1,KC_EQL), JP_EQL, ~0, (uint8_t) MOD_MASK_SHIFT), // =
+    &ko_make_basic(MOD_MASK_SHIFT, LT(1,KC_EQL), JP_PLUS), // +
+
+    // we can apply overrides but loose RCTL_T() effect
+    &ko_make_basic(MOD_MASK_SHIFT, RCTL_T(KC_MINS), JP_UNDS), // _
+
+    &ko_make_with_layers_and_negmods(0, KC_QUOT, JP_QUOT, ~0, (uint8_t) MOD_MASK_SHIFT), // '
+    &ko_make_basic(MOD_MASK_SHIFT, KC_QUOT, JP_DQUO), // "
+    &ko_make_basic(0, S(KC_QUOT), JP_DQUO), // "
+
+    &ko_make_with_layers_and_negmods(0, KC_GRV, JP_GRV, ~0, (uint8_t) MOD_MASK_SHIFT), // `
+    &ko_make_basic(MOD_MASK_SHIFT, KC_GRV, JP_TILD), // ~
+    &ko_make_basic(0, S(KC_GRV), JP_TILD), // ~
+
+    &ko_make_with_layers_and_negmods(0, KC_BSLS, JP_BSLS, ~0, (uint8_t) MOD_MASK_SHIFT), // (backslash)
+    &ko_make_basic(MOD_MASK_SHIFT, KC_BSLS, JP_PIPE), // |
+    &ko_make_basic(0, S(KC_BSLS), JP_PIPE), // |
+
+    &ko_make_with_layers_and_negmods(0, KC_LBRC, JP_LBRC, ~0, (uint8_t) MOD_MASK_SHIFT), // [
+    &ko_make_basic(MOD_MASK_SHIFT, KC_LBRC, JP_LCBR), // {
+    &ko_make_basic(0, S(KC_LBRC), JP_LCBR), // {
+
+    &ko_make_with_layers_and_negmods(0, KC_RBRC, JP_RBRC, ~0, (uint8_t) MOD_MASK_SHIFT), // ]
+    &ko_make_basic(MOD_MASK_SHIFT, KC_RBRC, JP_RCBR), // }
+    &ko_make_basic(0, S(KC_RBRC), JP_RCBR), // }
+
+    &ko_make_basic(0, KC_CAPS, JP_CAPS), // (CapsLock)
+
+    NULL
+};
+#endif
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
 #if defined(OS_DETECTION_ENABLE) && defined(DEFERRED_EXEC_ENABLE)
@@ -134,10 +198,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             switch (keyball.detected_host_os) {
             case OS_WINDOWS:
                 if (record->event.pressed) {
-                    register_code16(KC_RALT);
-                    wait_ms(10);
-                    tap_code16(KC_GRV);
-                    unregister_code16(KC_RALT);
+#ifdef KEY_OVERRIDE_ENABLE
+                    if (key_override_is_enabled()) {
+                        tap_code16(JP_ZKHK);
+                    } else {
+#else
+                    {
+#endif
+                        register_code16(KC_RALT);
+                        wait_ms(10);
+                        tap_code16(KC_GRV);
+                        unregister_code16(KC_RALT);
+                    }
                 }
                 return false;
             case OS_MACOS:
@@ -151,37 +223,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
 #endif
-        case KC_BSPC:
-            // https://docs.qmk.fm/feature_advanced_keycodes#shift-backspace-for-delete
-            {
-                // Initialize a boolean variable that keeps track
-                // of the delete key status: registered or not?
-                static bool delkey_registered;
-                uint8_t mod_state = get_mods();
-                if (record->event.pressed) {
-                    // Detect the activation of either shift keys
-                    if (mod_state & MOD_MASK_SHIFT) {
-                        // First temporarily canceling both shifts so that
-                        // shift isn't applied to the KC_DEL keycode
-                        del_mods(MOD_MASK_SHIFT);
-                        register_code(KC_DEL);
-                        // Update the boolean variable to reflect the status of KC_DEL
-                        delkey_registered = true;
-                        // Reapplying modifier state so that the held shift key(s)
-                        // still work even after having tapped the Backspace/Delete key.
-                        set_mods(mod_state);
-                        return false;
-                    }
-                } else { // on release of KC_BSPC
-                    // In case KC_DEL is still being sent even after the release of KC_BSPC
-                    if (delkey_registered) {
-                        unregister_code(KC_DEL);
-                        delkey_registered = false;
-                        return false;
-                    }
-                }
-            }
-            break;
         default:
             break;
     }
