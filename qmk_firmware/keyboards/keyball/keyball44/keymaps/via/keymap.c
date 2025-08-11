@@ -194,9 +194,11 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 #include "keymap_extras/keymap_japanese.h"
 const key_override_t **key_overrides = (const key_override_t *[]){
     &ko_make_basic(MOD_MASK_SHIFT, KC_2, JP_AT), // @
+    &ko_make_basic(MOD_MASK_SHIFT, S(KC_2), JP_AT), // @
     &ko_make_basic(0, S(KC_2), JP_AT), // @
 
     &ko_make_basic(MOD_MASK_SHIFT, KC_6, JP_CIRC), // ^
+    &ko_make_basic(MOD_MASK_SHIFT, S(KC_6), JP_CIRC), // ^
     &ko_make_basic(0, S(KC_6), JP_CIRC), // ^
 
     &ko_make_basic(MOD_MASK_SHIFT, KC_7, JP_AMPR), // &
