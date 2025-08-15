@@ -219,14 +219,14 @@ const key_override_t **key_overrides = (const key_override_t *[]){
     &ko_make_basic(MOD_MASK_SHIFT, TD(TD_JP_EQL_MO2), JP_PLUS), // +
     // treat Ctrl+= as Zoom-in like US layout (=, + are on the same key)
     // cf. Ctrl+= is treated as Zoom-out in JP layout (-, = are on the same key)
-    &ko_make_basic(MOD_MASK_CTRL, TD(TD_JP_EQL_MO2), C(JP_PLUS)),
+    &ko_make_basic(MOD_MASK_CTRL, TD(TD_JP_EQL_MO2), C(JP_SCLN)),
 #else
     // we can apply overrides but loose LT(layer,) effect
     &ko_make_with_layers_and_negmods(0, LT(2,KC_EQL), JP_EQL, ~0, (uint8_t) MOD_MASK_SHIFT | MOD_MASK_CTRL), // =
     &ko_make_basic(MOD_MASK_SHIFT, LT(2,KC_EQL), JP_PLUS), // +
     // treat Ctrl+= as Zoom-in like US layout (=, + are on the same key)
     // cf. Ctrl+= is treated as Zoom-out in JP layout (-, = are on the same key)
-    &ko_make_basic(MOD_MASK_CTRL, LT(2,KC_EQL), C(JP_PLUS)),
+    &ko_make_basic(MOD_MASK_CTRL, LT(2,KC_EQL), C(JP_SCLN)),
 #endif
 
     // we can apply overrides but loose RCTL_T() effect
