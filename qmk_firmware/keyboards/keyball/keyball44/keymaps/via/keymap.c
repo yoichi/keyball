@@ -21,112 +21,51 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "quantum.h"
 #include "os_detection.h"
 
+enum layer_number {
+    _BASE = 0,
+    _NUMBER,
+    _SYMBOL,
+    _MEDIA,
+    _CONFIG,
+};
+
 enum custom_user_keycodes {
     IME_TGL = QK_USER_0,
 };
 
 #define _LAYER_ _______ // should keep as transparent for momentarily layer activation
 
-#ifdef TAP_DANCE_ENABLE
-#include "keymap_japanese.h"
-// Tap Dance
-enum {
-    TD_JP_EQL_MO2,
-};
-
-typedef struct {
-    uint16_t tap;
-    uint16_t hold;
-    uint16_t held;
-} tap_dance_tap_hold_t;
-
-void tap_dance_tap_hold_finished(tap_dance_state_t *state, void *user_data) {
-    tap_dance_tap_hold_t *tap_hold = (tap_dance_tap_hold_t *)user_data;
-
-    if (state->pressed) {
-        if (state->count == 1
-#ifndef PERMISSIVE_HOLD
-            && !state->interrupted
-#endif
-        ) {
-            if (QK_MOMENTARY <= tap_hold->hold && tap_hold->hold <= QK_MOMENTARY_MAX) {
-                layer_on(QK_MOMENTARY_GET_LAYER(tap_hold->hold));
-            } else {
-                register_code16(tap_hold->hold);
-            }
-            tap_hold->held = tap_hold->hold;
-        } else {
-            register_code16(tap_hold->tap);
-            tap_hold->held = tap_hold->tap;
-        }
-    }
-}
-
-void tap_dance_tap_hold_reset(tap_dance_state_t *state, void *user_data) {
-    tap_dance_tap_hold_t *tap_hold = (tap_dance_tap_hold_t *)user_data;
-
-    if (tap_hold->held) {
-        if (QK_MOMENTARY <= tap_hold->held && tap_hold->held <= QK_MOMENTARY_MAX) {
-            layer_off(QK_MOMENTARY_GET_LAYER(tap_hold->held));
-        } else {
-            unregister_code16(tap_hold->held);
-        }
-        tap_hold->held = 0;
-    }
-}
-
-#define ACTION_TAP_DANCE_TAP_HOLD(tap, hold) \
-    { .fn = {NULL, tap_dance_tap_hold_finished, tap_dance_tap_hold_reset}, .user_data = (void *)&((tap_dance_tap_hold_t){tap, hold, 0}), }
-
-tap_dance_action_t tap_dance_actions[] = {
-    [TD_JP_EQL_MO2] = ACTION_TAP_DANCE_TAP_HOLD(JP_EQL, MO(2)),
-};
-#endif // TAP_DANCE_ENABLE
-
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  // default layer for macOS (US)
-  [0] = LAYOUT_universal(
- LT(3,KC_TAB), KC_Q     , KC_W     , KC_E    , KC_R     , KC_T     ,                                         KC_Y     , KC_U     , KC_I     , KC_O     , KC_P     , LT(2,KC_EQL),
+  [_BASE] = LAYOUT_universal(
+LT(_SYMBOL,KC_TAB), KC_Q, KC_W     , KC_E    , KC_R     , KC_T     ,                                         KC_Y     , KC_U     , KC_I     , KC_O     , KC_P     , LT(_NUMBER,KC_EQL),
 LCTL_T(KC_ESC),KC_A     , KC_S     , KC_D    , KC_F     , KC_G     ,                                         KC_H     , KC_J     , KC_K     , KC_L     , KC_SCLN  , RCTL_T(KC_MINS),
     KC_LSFT  , KC_Z     , KC_X     , KC_C    , KC_V     , KC_B     ,                                         KC_N     , KC_M     , KC_COMM  , KC_DOT   , KC_SLSH  , KC_RSFT  ,
-                  KC_LALT  , KC_LGUI , KC_BTN1  ,    LT(2,KC_SPC)  , MO(4)    ,                   KC_BSPC,LT(3,KC_ENT), _______       , _______  , KC_RGUI
+                  KC_LALT  , KC_LGUI , KC_BTN1,LT(_NUMBER,KC_SPC)  ,MO(_MEDIA),             KC_BSPC,LT(_SYMBOL,KC_ENT), _______       , _______  , KC_RGUI
   ),
 
-  // default layer for Windows (JP)
-  [1] = LAYOUT_universal(
-#ifdef TAP_DANCE_ENABLE
- LT(3,KC_TAB), KC_Q     , KC_W     , KC_E    , KC_R     , KC_T     ,                                         KC_Y     , KC_U     , KC_I     , KC_O     , KC_P     , TD(TD_JP_EQL_MO2),
-#else
- LT(3,KC_TAB), KC_Q     , KC_W     , KC_E    , KC_R     , KC_T     ,                                         KC_Y     , KC_U     , KC_I     , KC_O     , KC_P     , LT(2,KC_EQL),
-#endif
-LCTL_T(KC_ESC),KC_A     , KC_S     , KC_D    , KC_F     , KC_G     ,                                         KC_H     , KC_J     , KC_K     , KC_L     , KC_SCLN  , RCTL_T(KC_MINS),
-    KC_LSFT  , KC_Z     , KC_X     , KC_C    , KC_V     , KC_B     ,                                         KC_N     , KC_M     , KC_COMM  , KC_DOT   , KC_SLSH  , KC_RSFT  ,
-                  KC_LGUI  , KC_LALT , KC_BTN1  ,    LT(2,KC_SPC)  , MO(4)    ,                   KC_BSPC,LT(3,KC_ENT), _______       , _______  , KC_RALT
-  ),
-
-  [2] = LAYOUT_universal(
+  [_NUMBER] = LAYOUT_universal(
     KC_QUOT  , KC_1     , KC_2     , KC_3    , KC_4     , KC_5     ,                                         KC_6     , KC_7     , KC_8     , KC_9     , KC_0     , KC_BSLS  ,
     _______  , KC_INT1  , KC_INT3  , KC_GRV  , KC_LBRC  , KC_RBRC  ,                                         KC_LEFT  , KC_DOWN  , KC_UP    , KC_RGHT  , KC_INS   , _______  ,
     _______  , KC_CAPS  , _______  ,S(KC_HOME),S(KC_END), KC_DEL   ,                                         _______  , _______  , _______  , _______  , _______  , _______  ,
                   _______  , _______ , KC_HOME  ,         _LAYER_  , KC_END   ,                   _______  , _______  , _______       , _______  , RCTL(KC_RALT)
   ),
 
-  [3] = LAYOUT_universal(
+  [_SYMBOL] = LAYOUT_universal(
    S(KC_QUOT), S(KC_1)  , S(KC_2)  , S(KC_3) , S(KC_4)  , S(KC_5)  ,                                         S(KC_6)  , S(KC_7)  , S(KC_8)  , S(KC_9)  , S(KC_0)  ,S(KC_BSLS),
     _______  ,S(KC_INT1),S(KC_INT3),S(KC_GRV),S(KC_LBRC),S(KC_RBRC),                                         S(KC_LEFT),S(KC_DOWN),S(KC_UP) ,S(KC_RGHT), _______  , _______  ,
     _______  , KC_F1    , KC_F2    , KC_F3   , KC_F4    , KC_F5    ,                                         KC_F6    , KC_F7    , KC_F8    , KC_F9    , KC_F10   , KC_F11   ,
                   _______  , KC_BTN2 , KC_BTN1  ,        S(KC_HOME), S(KC_END),                   _______  , _LAYER_  , _______       , _______  , _______
   ),
 
-  [4] = LAYOUT_universal(
-    MO(5)    , G(KC_1)  , G(KC_2)  , G(KC_3) , G(KC_4)  , G(KC_5)  ,                                         G(KC_6)  , G(KC_7)  , G(KC_8)  , G(KC_9)  , KC_BRIU  , KC_VOLU  ,
+  [_MEDIA] = LAYOUT_universal(
+  MO(_CONFIG), G(KC_1)  , G(KC_2)  , G(KC_3) , G(KC_4)  , G(KC_5)  ,                                         G(KC_6)  , G(KC_7)  , G(KC_8)  , G(KC_9)  , KC_BRIU  , KC_VOLU  ,
     _______  ,S(KC_LEFT),S(KC_DOWN), S(KC_UP),S(KC_RGHT), KC_PGUP  ,                                         C(KC_LEFT),C(KC_DOWN),C(KC_UP) ,C(KC_RGHT), KC_BRID  , KC_VOLD  ,
     _______  ,RWIN(KC_1),RWIN(KC_2),RWIN(KC_3),RWIN(KC_4),KC_PGDN  ,                                 RWIN(KC_LEFT),RWIN(KC_DOWN),RWIN(KC_UP),RWIN(KC_RGHT),_______, KC_MUTE  ,
                   _______  , _______ , _______  ,         _______  , _LAYER_  ,                   IME_TGL  , _______  , _______       , _______  , _______
   ),
 
-  [5] = LAYOUT_universal(
+  [_CONFIG] = LAYOUT_universal(
     _LAYER_  , _______  , _______  , _______ , _______  , EE_CLR   ,                                         SSNP_FRE , SSNP_VRT , SSNP_HOR , SREV_VRT , SREV_HOR , _______  ,
     KBC_RST  , KBC_SAVE , CPI_D1K  , CPI_D100, CPI_I100 , CPI_I1K  ,                                         _______  , _______  , AG_RNRM  , _______  , _______  , _______  ,
     QK_BOOT  , _______  , SCRL_DVD , SCRL_DVI, _______  , _______  ,                                         _______  , _______  , AG_LNRM  , _______  , _______  , _______  ,
@@ -143,7 +82,6 @@ uint32_t os_detect_callback(uint32_t trigger_time, void *cb_arg) {
 #ifdef KEY_OVERRIDE_ENABLE
             key_override_on();
 #endif
-            set_single_persistent_default_layer(1);
             break;
         case OS_MACOS: {
             uint8_t mode = KEYBALL_SCROLL_REVERSE_VERTICAL | KEYBALL_SCROLL_REVERSE_HORIZONTAL;
@@ -151,7 +89,6 @@ uint32_t os_detect_callback(uint32_t trigger_time, void *cb_arg) {
 #ifdef KEY_OVERRIDE_ENABLE
             key_override_off();
 #endif
-            set_single_persistent_default_layer(0);
             break;
         }
         default:
@@ -173,11 +110,11 @@ void keyboard_post_init_user(void) {
 layer_state_t layer_state_set_user(layer_state_t state) {
     uint8_t layer = get_highest_layer(state);
     switch (layer) {
-        case 4:
+        case _MEDIA:
             keyball_set_scroll_mode(true);
             keyball_set_scrollsnap_mode(KEYBALL_SCROLLSNAP_MODE_VERTICAL);
             break;
-        case 5:
+        case _CONFIG:
             keyball_set_scroll_mode(true);
             keyball_set_scrollsnap_mode(KEYBALL_SCROLLSNAP_MODE_HORIZONTAL);
             break;
@@ -215,19 +152,7 @@ const key_override_t **key_overrides = (const key_override_t *[]){
 
     &ko_make_basic(MOD_MASK_SHIFT, KC_SCLN, JP_COLN), // :
 
-#ifdef TAP_DANCE_ENABLE
-    &ko_make_basic(MOD_MASK_SHIFT, TD(TD_JP_EQL_MO2), JP_PLUS), // +
-    // treat Ctrl+= as Zoom-in like US layout (=, + are on the same key)
-    // cf. Ctrl+= is treated as Zoom-out in JP layout (-, = are on the same key)
-    &ko_make_basic(MOD_MASK_CTRL, TD(TD_JP_EQL_MO2), C(JP_SCLN)),
-#else
-    // we can apply overrides but loose LT(layer,) effect
-    &ko_make_with_layers_and_negmods(0, LT(2,KC_EQL), JP_EQL, ~0, (uint8_t) MOD_MASK_SHIFT | MOD_MASK_CTRL), // =
-    &ko_make_basic(MOD_MASK_SHIFT, LT(2,KC_EQL), JP_PLUS), // +
-    // treat Ctrl+= as Zoom-in like US layout (=, + are on the same key)
-    // cf. Ctrl+= is treated as Zoom-out in JP layout (-, = are on the same key)
-    &ko_make_basic(MOD_MASK_CTRL, LT(2,KC_EQL), C(JP_SCLN)),
-#endif
+    // LT(_NUMBER,KC_EQL) is handled in process_record_user
 
     // we can apply overrides but loose RCTL_T() effect
     &ko_make_basic(MOD_MASK_SHIFT, RCTL_T(KC_MINS), JP_UNDS), // _
@@ -260,18 +185,76 @@ const key_override_t **key_overrides = (const key_override_t *[]){
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-#ifdef TAP_DANCE_ENABLE
-        case TD(TD_JP_EQL_MO2):  // list all tap dance keycodes with tap-hold configurations
-            {
-                tap_dance_action_t *action = &tap_dance_actions[TD_INDEX(keycode)];
-                if (!record->event.pressed && action->state.count && !action->state.finished) {
-                    tap_dance_tap_hold_t *tap_hold = (tap_dance_tap_hold_t *)action->user_data;
-                    tap_code16(tap_hold->tap);
+#ifdef KEY_OVERRIDE_ENABLE
+        case LT(_NUMBER,KC_EQL):
+            if (key_override_is_enabled()) {
+                if (record->tap.count) {
+                    static uint16_t kc;
+                    if (record->event.pressed) {
+                        uint8_t mod_state = get_mods();
+                        if (mod_state & MOD_MASK_CTRL) {
+                            // treat Ctrl+= as Zoom-in like US layout (=, + are on the same key)
+                            // cf. Ctrl+= is treated as Zoom-out in JP layout (-, = are on the same key)
+                            del_mods(MOD_MASK_SHIFT);
+                            kc = JP_SCLN; // ;, + are on the same key in JIS layout
+                        } else if (mod_state & MOD_MASK_SHIFT) {
+                            del_mods(MOD_MASK_SHIFT);
+                            kc = JP_PLUS;
+                        } else {
+                            kc = JP_EQL;
+                        }
+                        register_code16(kc);
+                        set_mods(mod_state);
+                        return false;
+                    } else if (kc) {
+                        unregister_code16(kc);
+                        kc = 0;
+                        return false;
+                    }
                 }
             }
             break;
 #endif
 #if defined(OS_DETECTION_ENABLE) && defined(DEFERRED_EXEC_ENABLE)
+        case KC_LALT:
+            switch (detected_host_os()) {
+            case OS_WINDOWS:
+                if (record->event.pressed) {
+                    register_code16(KC_LGUI);
+                } else {
+                    unregister_code16(KC_LGUI);
+                }
+                return false;
+            default:
+                break;
+            }
+            break;
+        case KC_LGUI:
+            switch (detected_host_os()) {
+            case OS_WINDOWS:
+                if (record->event.pressed) {
+                    register_code16(KC_LALT);
+                } else {
+                    unregister_code16(KC_LALT);
+                }
+                return false;
+            default:
+                break;
+            }
+            break;
+        case KC_RGUI:
+            switch (detected_host_os()) {
+            case OS_WINDOWS:
+                if (record->event.pressed) {
+                    register_code16(KC_RALT);
+                } else {
+                    unregister_code16(KC_RALT);
+                }
+                return false;
+            default:
+                break;
+            }
+            break;
         case IME_TGL:
             switch (keyball.detected_host_os) {
             case OS_WINDOWS:
