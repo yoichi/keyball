@@ -41,7 +41,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 LT(_SYMBOL,KC_TAB), KC_Q, KC_W     , KC_E    , KC_R     , KC_T     ,                                         KC_Y     , KC_U     , KC_I     , KC_O     , KC_P     , LT(_NUMBER,KC_EQL),
 LCTL_T(KC_ESC),KC_A     , KC_S     , KC_D    , KC_F     , KC_G     ,                                         KC_H     , KC_J     , KC_K     , KC_L     , KC_SCLN  , RCTL_T(KC_MINS),
     KC_LSFT  , KC_Z     , KC_X     , KC_C    , KC_V     , KC_B     ,                                         KC_N     , KC_M     , KC_COMM  , KC_DOT   , KC_SLSH  , KC_RSFT  ,
-                  KC_LALT  , KC_LGUI , KC_BTN1,LT(_NUMBER,KC_SPC)  ,MO(_MEDIA),             KC_BSPC,LT(_SYMBOL,KC_ENT), _______       , _______  , KC_RGUI
+                  KC_LALT  , KC_LGUI , KC_BTN1,LT(_NUMBER,KC_SPC)  ,LT(_MEDIA,KC_BSLS),     KC_BSPC,LT(_SYMBOL,KC_ENT), _______       , _______  , RALT_T(KC_QUOT)
   ),
 
   [_NUMBER] = LAYOUT_universal(
@@ -214,6 +214,52 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
+        case LT(_MEDIA,KC_BSLS):
+            if (key_override_is_enabled()) {
+                if (record->tap.count) {
+                    static uint16_t kc;
+                    if (record->event.pressed) {
+                        uint8_t mod_state = get_mods();
+                        if (mod_state & MOD_MASK_SHIFT) {
+                            del_mods(MOD_MASK_SHIFT);
+                            kc = JP_PIPE;
+                        } else {
+                            kc = JP_BSLS;
+                        }
+                        register_code16(kc);
+                        set_mods(mod_state);
+                        return false;
+                    } else if (kc) {
+                        unregister_code16(kc);
+                        kc = 0;
+                        return false;
+                    }
+                }
+            }
+            break;
+        case RALT_T(KC_QUOT):
+            if (key_override_is_enabled()) {
+                if (record->tap.count) {
+                    static uint16_t kc;
+                    if (record->event.pressed) {
+                        uint8_t mod_state = get_mods();
+                        if (mod_state & MOD_MASK_SHIFT) {
+                            del_mods(MOD_MASK_SHIFT);
+                            kc = JP_DQUO;
+                        } else {
+                            kc = JP_QUOT;
+                        }
+                        register_code16(kc);
+                        set_mods(mod_state);
+                        return false;
+                    } else if (kc) {
+                        unregister_code16(kc);
+                        kc = 0;
+                        return false;
+                    }
+                }
+            }
+            break;
 #endif
 #if defined(OS_DETECTION_ENABLE) && defined(DEFERRED_EXEC_ENABLE)
         case KC_LALT:
@@ -236,19 +282,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     register_code16(KC_LALT);
                 } else {
                     unregister_code16(KC_LALT);
-                }
-                return false;
-            default:
-                break;
-            }
-            break;
-        case KC_RGUI:
-            switch (detected_host_os()) {
-            case OS_WINDOWS:
-                if (record->event.pressed) {
-                    register_code16(KC_RALT);
-                } else {
-                    unregister_code16(KC_RALT);
                 }
                 return false;
             default:
