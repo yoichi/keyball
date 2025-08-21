@@ -67,7 +67,7 @@ LCTL_T(KC_ESC),KC_A     , KC_S     , KC_D    , KC_F     , KC_G     ,            
 
   [_CONFIG] = LAYOUT_universal(
     _LAYER_  , _______  , _______  , _______ , _______  , EE_CLR   ,                                         SSNP_FRE , SSNP_VRT , SSNP_HOR , SREV_VRT , SREV_HOR , _______  ,
-    KBC_RST  , KBC_SAVE , CPI_D1K  , CPI_D100, CPI_I100 , CPI_I1K  ,                                         _______  , _______  , AG_RNRM  , _______  , _______  , _______  ,
+    KBC_RST  , KBC_SAVE , CPI_D1K  , CPI_D100, CPI_I100 , CPI_I1K  ,                                         _______  , _______  , AG_RNRM  , _______  , _______  , QK_RBT   ,
     QK_BOOT  , _______  , SCRL_DVD , SCRL_DVI, _______  , _______  ,                                         _______  , _______  , AG_LNRM  , _______  , _______  , _______  ,
                   _______  , _______ , _______  ,         _______  , _______  , QK_KEY_OVERRIDE_ON,QK_KEY_OVERRIDE_OFF, _______       , _______  , _______
   ),
