@@ -41,35 +41,35 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 LT(_SYMBOL,KC_TAB), KC_Q, KC_W     , KC_E    , KC_R     , KC_T     ,                                         KC_Y     , KC_U     , KC_I     , KC_O     , KC_P     , LT(_NUMBER,KC_EQL),
 LCTL_T(KC_ESC),KC_A     , KC_S     , KC_D    , KC_F     , KC_G     ,                                         KC_H     , KC_J     , KC_K     , KC_L     , KC_SCLN  , RCTL_T(KC_MINS),
     KC_LSFT  , KC_Z     , KC_X     , KC_C    , KC_V     , KC_B     ,                                         KC_N     , KC_M     , KC_COMM  , KC_DOT   , KC_SLSH  , KC_RSFT  ,
-                  KC_LALT  , KC_LGUI , KC_BTN1,LT(_NUMBER,KC_SPC)  ,LT(_MEDIA,KC_BSLS),     KC_BSPC,LT(_SYMBOL,KC_ENT), _______       , _______  , RALT_T(KC_QUOT)
+                  KC_LALT  , KC_LGUI , KC_BTN1,LT(_NUMBER,KC_SPC)  ,LT(_MEDIA,KC_BSLS),     KC_BSPC,LT(_SYMBOL,KC_ENT), XXXXXXX       , XXXXXXX  , RALT_T(KC_QUOT)
   ),
 
   [_NUMBER] = LAYOUT_universal(
     KC_QUOT  , KC_1     , KC_2     , KC_3    , KC_4     , KC_5     ,                                         KC_6     , KC_7     , KC_8     , KC_9     , KC_0     , KC_BSLS  ,
     _______  , KC_INT1  , KC_INT3  , KC_GRV  , KC_LBRC  , KC_RBRC  ,                                         KC_LEFT  , KC_DOWN  , KC_UP    , KC_RGHT  , KC_INS   , _______  ,
-    _______  , KC_CAPS  , _______  ,S(KC_HOME),S(KC_END), KC_DEL   ,                                         _______  , _______  , _______  , _______  , _______  , _______  ,
-                  _______  , _______ , KC_HOME  ,         _LAYER_  , KC_END   ,                   _______  , _______  , _______       , _______  , RCTL(KC_RALT)
+    KC_LSFT  , KC_CAPS  , _______  ,S(KC_HOME),S(KC_END), KC_DEL   ,                                         _______  , _______  , KC_COMM  , KC_DOT   , KC_SLSH  , KC_RSFT  ,
+                  _______  , _______ , KC_HOME  ,         _LAYER_  , KC_END   ,                   KC_BSPC  , _______  , XXXXXXX       , XXXXXXX  , RCTL(KC_RALT)
   ),
 
   [_SYMBOL] = LAYOUT_universal(
    S(KC_QUOT), S(KC_1)  , S(KC_2)  , S(KC_3) , S(KC_4)  , S(KC_5)  ,                                         S(KC_6)  , S(KC_7)  , S(KC_8)  , S(KC_9)  , S(KC_0)  ,S(KC_BSLS),
     _______  ,S(KC_INT1),S(KC_INT3),S(KC_GRV),S(KC_LBRC),S(KC_RBRC),                                         S(KC_LEFT),S(KC_DOWN),S(KC_UP) ,S(KC_RGHT), _______  , _______  ,
     _______  , KC_F1    , KC_F2    , KC_F3   , KC_F4    , KC_F5    ,                                         KC_F6    , KC_F7    , KC_F8    , KC_F9    , KC_F10   , KC_F11   ,
-                  _______  , KC_BTN2 , KC_BTN1  ,        S(KC_HOME), S(KC_END),                   _______  , _LAYER_  , _______       , _______  , _______
+                  _______  , KC_BTN2 , KC_BTN1  ,        S(KC_HOME), S(KC_END),                   KC_BSPC  , _LAYER_  , XXXXXXX       , XXXXXXX  , KC_RALT
   ),
 
   [_MEDIA] = LAYOUT_universal(
   MO(_CONFIG), G(KC_1)  , G(KC_2)  , G(KC_3) , G(KC_4)  , G(KC_5)  ,                                         G(KC_6)  , G(KC_7)  , G(KC_8)  , G(KC_9)  , KC_BRIU  , KC_VOLU  ,
-    _______  ,S(KC_LEFT),S(KC_DOWN), S(KC_UP),S(KC_RGHT), KC_PGUP  ,                                         C(KC_LEFT),C(KC_DOWN),C(KC_UP) ,C(KC_RGHT), KC_BRID  , KC_VOLD  ,
-    _______  ,RWIN(KC_1),RWIN(KC_2),RWIN(KC_3),RWIN(KC_4),KC_PGDN  ,                                 RWIN(KC_LEFT),RWIN(KC_DOWN),RWIN(KC_UP),RWIN(KC_RGHT),_______, KC_MUTE  ,
-                  _______  , _______ , _______  ,         _______  , _LAYER_  ,                   IME_TGL  , _______  , _______       , _______  , _______
+    _______  , _______  , _______  , _______ , _______  , KC_PGUP  ,                                         C(KC_LEFT),C(KC_DOWN),C(KC_UP) ,C(KC_RGHT), KC_BRID  , KC_VOLD  ,
+    KC_LSFT  ,RWIN(KC_1),RWIN(KC_2),RWIN(KC_3),RWIN(KC_4),KC_PGDN  ,                                 RWIN(KC_LEFT),RWIN(KC_DOWN),RWIN(KC_UP),RWIN(KC_RGHT),_______, KC_MUTE  ,
+                  _______  , _______ , _______  ,         _______  , _LAYER_  ,                   IME_TGL  , _______  , XXXXXXX       , XXXXXXX  , _______
   ),
 
   [_CONFIG] = LAYOUT_universal(
     _LAYER_  , _______  , _______  , _______ , _______  , EE_CLR   ,                                         SSNP_FRE , SSNP_VRT , SSNP_HOR , SREV_VRT , SREV_HOR , _______  ,
     KBC_RST  , KBC_SAVE , CPI_D1K  , CPI_D100, CPI_I100 , CPI_I1K  ,                                         _______  , _______  , AG_RNRM  , _______  , _______  , QK_RBT   ,
     QK_BOOT  , _______  , SCRL_DVD , SCRL_DVI, _______  , _______  ,                                         _______  , _______  , AG_LNRM  , _______  , _______  , _______  ,
-                  _______  , _______ , _______  ,         _______  , _______  , QK_KEY_OVERRIDE_ON,QK_KEY_OVERRIDE_OFF, _______       , _______  , _______
+                  _______  , _______ , _______  ,         _______  , _______  , QK_KEY_OVERRIDE_ON,QK_KEY_OVERRIDE_OFF, XXXXXXX       , XXXXXXX  , _______
   ),
 };
 // clang-format on
