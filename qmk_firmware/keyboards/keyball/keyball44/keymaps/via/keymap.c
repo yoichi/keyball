@@ -61,7 +61,7 @@ LCTL_T(KC_ESC),KC_A     , KC_S     , KC_D    , KC_F     , KC_G     ,            
   [_MEDIA] = LAYOUT_universal(
   MO(_CONFIG), G(KC_1)  , G(KC_2)  , G(KC_3) , G(KC_4)  , G(KC_5)  ,                                         G(KC_6)  , G(KC_7)  , G(KC_8)  , G(KC_9)  , KC_BRIU  , KC_VOLU  ,
     _______  , _______  , _______  , _______ , _______  , KC_PGUP  ,                                         C(KC_LEFT),C(KC_DOWN),C(KC_UP) ,C(KC_RGHT), KC_BRID  , KC_VOLD  ,
-    KC_LSFT  ,RWIN(KC_1),RWIN(KC_2),RWIN(KC_3),RWIN(KC_4),KC_PGDN  ,                                     LCA(KC_LEFT),LCA(KC_DOWN),LCA(KC_UP),LCA(KC_RGHT),_______, KC_MUTE  ,
+    KC_LSFT  , _______  , _______  , _______ , _______  , KC_PGDN  ,                                     LCA(KC_LEFT),LCA(KC_DOWN),LCA(KC_UP),LCA(KC_RGHT),_______, KC_MUTE  ,
                   _______  , _______ , _______  ,         _______  , _LAYER_  ,                   IME_TGL  , _______  , XXXXXXX       , XXXXXXX  , _______
   ),
 
