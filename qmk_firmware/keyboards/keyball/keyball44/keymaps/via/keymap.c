@@ -55,7 +55,7 @@ LCTL_T(KC_ESC),KC_A     , KC_S     , KC_D    , KC_F     , KC_G     ,            
    S(KC_QUOT), S(KC_1)  , S(KC_2)  , S(KC_3) , S(KC_4)  , S(KC_5)  ,                                         S(KC_6)  , S(KC_7)  , S(KC_8)  , S(KC_9)  , S(KC_0)  ,S(KC_BSLS),
     _______  ,S(KC_INT1),S(KC_INT3),S(KC_GRV),S(KC_LBRC),S(KC_RBRC),                                         S(KC_LEFT),S(KC_DOWN),S(KC_UP) ,S(KC_RGHT), _______  , _______  ,
     _______  , KC_F1    , KC_F2    , KC_F3   , KC_F4    , KC_F5    ,                                         KC_F6    , KC_F7    , KC_F8    , KC_F9    , KC_F10   , KC_F11   ,
-                  KC_BTN2  , KC_LGUI , KC_BTN1  ,        S(KC_HOME), S(KC_END),                   KC_BSPC  , _LAYER_  , XXXXXXX       , XXXXXXX  , KC_RALT
+                  _______  , KC_LGUI , KC_BTN2  ,        S(KC_HOME), S(KC_END),                   KC_BSPC  , _LAYER_  , XXXXXXX       , XXXXXXX  , KC_RALT
   ),
 
   [_MEDIA] = LAYOUT_universal(
