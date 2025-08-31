@@ -263,7 +263,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #endif
 #if defined(OS_DETECTION_ENABLE) && defined(DEFERRED_EXEC_ENABLE)
         case KC_LALT:
-            switch (detected_host_os()) {
+            switch (keyball.detected_host_os) {
             case OS_WINDOWS:
                 if (record->event.pressed) {
                     register_code16(KC_LGUI);
@@ -276,7 +276,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
         case KC_LGUI:
-            switch (detected_host_os()) {
+            switch (keyball.detected_host_os) {
             case OS_WINDOWS:
                 if (record->event.pressed) {
                     register_code16(KC_LALT);
@@ -292,7 +292,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case LCA(KC_DOWN):
         case LCA(KC_UP):
         case LCA(KC_RGHT):
-            switch (detected_host_os()) {
+            switch (keyball.detected_host_os) {
             case OS_WINDOWS:
                 keycode ^= (QK_LCTL | QK_LALT);
                 keycode = RWIN(keycode);
@@ -310,7 +310,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case C(KC_DOWN):
         case C(KC_UP):
         case C(KC_RGHT):
-            switch (detected_host_os()) {
+            switch (keyball.detected_host_os) {
             case OS_WINDOWS:
                 keycode = RWIN(keycode);
                 if (record->event.pressed) {
