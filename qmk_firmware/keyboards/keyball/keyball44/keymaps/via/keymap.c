@@ -77,6 +77,10 @@ LCTL_T(KC_ESC),KC_A     , KC_S     , KC_D    , KC_F     , KC_G     ,            
 #if defined(OS_DETECTION_ENABLE) && defined(DEFERRED_EXEC_ENABLE)
 uint32_t os_detect_callback(uint32_t trigger_time, void *cb_arg) {
     keyball.detected_host_os = detected_host_os();
+    if (keyball.detected_host_os != OS_MACOS) {
+        // otherwise fallback to OS_WINDOWS
+        keyball.detected_host_os = OS_WINDOWS;
+    }
     switch (keyball.detected_host_os) {
         case OS_WINDOWS:
 #ifdef KEY_OVERRIDE_ENABLE
